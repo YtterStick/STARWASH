@@ -1,0 +1,60 @@
+<section id="overall-sales-report">
+    <div class="page-header">
+        <div class="page-title">
+            <h1>Overall Sales Report</h1>
+            <p>Comprehensive view of sales across branches, services, and time periods.</p>
+        </div>
+    </div>
+
+    <div class="report-filters">
+        <div class="filter">
+            <label for="date-range">Date Range</label>
+            <input type="date" id="start-date" name="start-date">
+            <input type="date" id="end-date" name="end-date">
+        </div>
+        <div class="filter">
+            <label for="branch">Select Branch</label>
+            <select id="branch" name="branch">
+                <option value="all">All Branches</option>
+                <option value="branch1">Branch 1</option>
+                <option value="branch2">Branch 2</option>
+                <option value="branch3">Branch 3</option>
+            </select>
+        </div>
+        <div class="filter">
+            <label for="service-type">Select Service</label>
+            <select id="service-type" name="service-type">
+                <option value="all">All Services</option>
+                <option value="wash">Wash</option>
+                <option value="dry-cleaning">Dry Cleaning</option>
+                <option value="folding">Folding</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="sales-overview">
+        <div class="card">
+            <h3>Total Sales</h3>
+            <p>&#8369;200,000</p>
+        </div>
+        <div class="card">
+            <h3>Total Transactions</h3>
+            <p>2,500</p>
+        </div>
+        <div class="card">
+            <h3>Average Sale per Transaction</h3>
+            <p>&#8369;0</p>
+        </div>
+    </div>
+
+    <div class="sales-charts">
+        <div class="chart">
+            <h3>Sales by Service Type</h3>
+            <canvas id="serviceSalesChart"></canvas>
+        </div>
+        <div class="chart">
+            <h3>Sales Trend (Monthly)</h3>
+            <canvas id="monthlySalesTrendChart"></canvas>
+        </div>
+    </div>
+</section>

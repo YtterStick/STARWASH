@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/style/staff.css">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div class="brand-logo">
+                <img src="/assets/logo.svg" width="40" alt="Logo">
+                <img src="/assets/text-logo.svg" alt="Star Wash" title="Star Wash">
+            </div>
+            <ul class="navbar-item">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-section="dashboard">
+                        <img src="" alt="">
+                        <span class="text-link">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="toggleDropdown(event)">
+                        <img src="" alt="">
+                        <span class="text-link">Sales Order</span>
+                        <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link" data-section="create-sales-order">Create Sales Order</a></li>
+                        <li><a href="#" class="nav-link" data-section="order-process">Process Payment</a></li>
+                        <li><a href="#" class="nav-link" data-section="load-status">Load Status</a></li>
+                    </ul>
+                </li>
+                <hr class="strip-line">
+
+                <li class="nav-item">
+                    <a href="#" onclick="toggleDropdown(event)" class="nav-link">
+                        <img src="" alt="">
+                        <span class="text-link">Sales Record</span>
+                        <i class="arrow-icon fas fa-chevron-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#view-record" class="nav-link" data-section="view-sales-record">View Sales Record</a></li>
+                        <li><a href="#manage-distribution" class="nav-link" data-section="manage-distribution">Manage Distribution</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="inventory">
+                        <img src="" alt="">
+                        <span class="text-link">Inventory</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="account">
+                <div class="user-account">
+                    <img src="/assets/avatar.svg" alt="User Avatar" class="img-avatar">
+                    <div class="name-account">
+                        <h1>Andrei Dilag</h1>
+                        <p>Staff</p>
+                    </div>
+                </div>
+                <div class="logout" id="logout-btn">
+                    <img src="/assets/logout.svg" alt="Logout" class="img-log">
+                    <span class="btn-logout">Logout</span>
+                </div>
+            </div>
+            
+        </aside>
+
+        <div class="main-content" id="content-id">
+            <!-- Dynamic content loaded here -->
+        </div>
+    </div>
+    <div id="print-popup" class="popup">
+        <div class="popup-content">
+            <!-- Add Close Button -->
+            <button id="close-popup" class="popup-close-button">&times;</button>
+            <iframe id="receipt-iframe" class="receipt-iframe" frameborder="0"></iframe>
+            <button id="print-button" class="popup-print-button">Print</button>
+        </div>
+    </div>
+    
+    
+    <script src="/staff_scripts/staff_loader.js"></script>
+</body>
+
+</html>

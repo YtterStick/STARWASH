@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="/scripts/login.js"></script>
+  <link rel="stylesheet" href="/style/login.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h2>Login</h2>
+      <form id="login-form" method="POST">
+        <div class="input-container">
+          <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="input-container">
+          <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
+      </form>
+    </div>
+  </div>
+  <div id="toast" class="toast hidden">
+    <p>Incorrect password. Please try again.</p>
+  </div>
+</body>
+</html>

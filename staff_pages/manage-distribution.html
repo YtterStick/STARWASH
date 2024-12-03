@@ -1,0 +1,33 @@
+<div class="manage-distribution">
+    <h2>Manage Distribution</h2>
+
+    <div class="filters">
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date">
+
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date">
+
+        <input type="text" id="search-bar" placeholder="Search by customer name">
+    </div>
+
+    <table class="sales-record-table">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Number of Loads</th>
+                <th>Date & Time Paid</th> <!-- Only keep this column -->
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="distribution-orders-body">
+            <!-- Data will be dynamically loaded here -->
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button id="prev-page">Previous</button>
+        <span id="current-page">1</span>
+        <button id="next-page">Next</button>
+    </div>
+</div>

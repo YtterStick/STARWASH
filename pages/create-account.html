@@ -1,0 +1,40 @@
+<section id="account-management">
+    <div class="page-header">
+        <div class="page-title">
+            <h1>Account Management</h1>
+            <p>Create user accounts and assign roles.</p>
+        </div>
+    </div>
+
+    <!-- Account creation form -->
+    <div class="account-form">
+        <form id="account-form" method="POST" action="/create-account">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                    <option value="Admin">Admin</option>
+                    <option value="Staff" selected>Branch Staff</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="branch">Assign Branch</label>
+                <select id="branch_id" name="branch_id" required>
+                    <!-- Branch options will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-submit">Create Account</button>
+            </div>
+        </form>
+    </div>
+</section>
+<script src="/scripts/loadBranches.js"></script>
+<script src="/scripts/createAccount.js"></script>

@@ -1,0 +1,45 @@
+<div class="create-sales-order">
+    <h2>Create Sales Order</h2>
+    <form id="sales-order-form">
+        <div class="form-group">
+            <label for="customer-name">Customer Name</label>
+            <input placeholder="Enter Customer Name" type="text" id="customer-name" name="customerName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="number-of-loads">Loads</label>
+            <input placeholder="Number of Loads" type="number" id="number-of-loads" name="numberOfLoads" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="services">Select Service</label>
+            <select id="services" name="services" required>
+                <option value="Wash">Wash</option>
+                <option value="Dry">Dry</option>
+                <option value="Wash & Dry">Wash & Dry</option>
+                <option value="Special Service">Special Service</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="detergent-group">
+            <label for="detergent-count">Detergent Packs</label>
+            <input placeholder="Number of Detergent" type="number" id="detergent-count" name="detergentCount" min="0">
+        </div>
+
+        <div class="form-group" id="fabric-softener-group">
+            <label for="fabric-softener-count">Softener Packs</label>
+            <input placeholder="Number of Softener" type="number" id="fabric-softener-count" name="fabricSoftenerCount" min="0">
+        </div>
+
+        <div class="form-group">
+            <label for="payment-status">Payment Status</label>
+            <select id="payment-status" name="paymentStatus" required>
+                <option value="Paid">Paid</option>
+                <option value="Unpaid">Unpaid</option>
+            </select>
+            <div class="form-actions">
+                <button type="submit" class="btn-process">Process Transaction</button>
+            </div>
+        </div>
+    </form>
+</div>
