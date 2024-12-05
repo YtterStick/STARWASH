@@ -1,0 +1,35 @@
+<div id="report-section" class="report-section">
+    <div class="page-header">
+        <h1>Branch Report</h1>
+    </div>
+
+    <div class="filters">
+        <label for="branch-filter">Select Branch:</label>
+        <select id="branch-filter">
+        </select>
+
+        <label for="date-range">Date Range:</label>
+        <input type="date" id="start-date">
+        <input type="date" id="end-date">
+    </div>
+
+    <div class="summary-cards" id="report-section">
+        <div class="card">
+            <h3>Total Sales</h3>
+            <p id="total-sales">₱0</p>
+        </div>
+        <div class="card">
+            <h3>Total Transactions</h3>
+            <p id="total-transactions">0</p>
+        </div>
+        <div class="card">
+            <h3>Total Income</h3>
+            <p id="total-income">₱0</p>
+        </div>
+    </div>
+
+    <div class="chart-section">
+        <h2>Branch Performance Chart</h2>
+        <canvas id="reportChart" height="370px"></canvas>
+    </div>
+</div>
