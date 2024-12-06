@@ -3,9 +3,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const session = require('express-session');
 const path = require('path');
-const exp = require('constants');
-
-
+const bodyParser = require("body-parser");
 const app = express();
 const PORT = 3000;
 
@@ -60,8 +58,17 @@ app.set('db', db);
 const accountsRoutes = require("./routes/accounts"); 
 app.use("/api/accounts", accountsRoutes);
 app.use('/create-account', require('./routes/createAccount'));
+
 const branchesRoutes = require("./routes/branches");
 app.use("/api/branches", branchesRoutes);
+app.use('/api', branchesRoutes);
+
+
+const dashboardRoutes = require('./routes/dashboard');
+app.use('/api/dashboard-stats', dashboardRoutes);
+app.use('/api', dashboardRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+
 
 const salesOrderRoutes = require('./routes/sales-order');
 app.use('/api/sales-order', salesOrderRoutes);

@@ -15,6 +15,7 @@ const PRICING = {
     fabricSoftenerCost: 13,
     plasticFee: 3.0,
 };
+
 router.post("/process", isAuthenticated("Staff"), async (req, res) => {
     try {
         const {
@@ -46,12 +47,13 @@ router.post("/process", isAuthenticated("Staff"), async (req, res) => {
         };
 
         const baseCost = PRICING.services[services] || 0;
+        const plasticFee = 3 * numberOfLoads; 
         const totalCost =
             numberOfLoads * baseCost +
             (detergentCount || 0) * PRICING.detergentCost +
             (fabricSoftenerCount || 0) * PRICING.fabricSoftenerCost +
-            PRICING.plasticFee;
-
+            plasticFee;
+        
         const query = `
             INSERT INTO sales_orders (
                 user_id, customer_name, number_of_loads, services,
@@ -195,7 +197,7 @@ router.get("/unpaid", isAuthenticated("Staff"), (req, res) => {
     const query = `
         SELECT * FROM sales_orders
         WHERE branch_id = ? AND payment_status = 'Unpaid'
-        ORDER BY month_created DESC
+        ORDER BY created_at DESC
     `;
 
     db.query(query, [branchId], (err, result) => {
@@ -212,11 +214,11 @@ router.post("/mark-paid/:orderId", isAuthenticated("Staff"), (req, res) => {
     const { orderId } = req.params;
     const db = req.app.get("db");
 
-    const currentTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' '); // YYYY-MM-DD HH:MM:SS
+    const currentTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     const query = `
         UPDATE sales_orders
-        SET payment_status = 'Paid', claimed_status = 'Unclaimed', paid_at = ?
+        SET payment_status = 'Paid', claimed_status = 'Unclaimed', paid_at = ?, is_today_transaction = 1
         WHERE id = ? AND branch_id = ?
     `;
 
@@ -386,49 +388,64 @@ router.get("/sales-records", isAuthenticated("Staff"), (req, res) => {
     });
 });
 
-
-function formatDateTime(date) {
-    const newDate = new Date(date);
-    return newDate.toLocaleString("en-US", { dateStyle: "short", timeStyle: "short" });
-}
-
-
-async function generateReceiptPDF(data) {
+const generateReceiptPDF = async (data) => {
     const pdfDoc = await PDFDocument.create();
     const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
 
-    const page = pdfDoc.addPage([400, 600]);
     const {
         customerName,
         services,
-        numberOfLoads,
-        detergentCount,
-        fabricSoftenerCount,
-        additionalFees,
-        totalCost,
+        numberOfLoads = 0,
+        detergentCount = 0,
+        fabricSoftenerCount = 0,
+        additionalFees = 0,
+        totalCost = 0,
         createdAt,
         paidAt,
         claimedAt,
     } = data;
 
-    const additionalFeesNumeric = Number(additionalFees) || PRICING.plasticFee;
+    // Calculate plastic fee dynamically (₱3 per load)
+    const plasticFee = 3 * numberOfLoads; // 3 PHP per load
 
-    const detergentAmount = (detergentCount || 0) * PRICING.detergentCost;
-    const fabricSoftenerAmount = (fabricSoftenerCount || 0) * PRICING.fabricSoftenerCost;
+    const detergentAmount = Number(detergentCount) * PRICING.detergentCost;
+    const fabricSoftenerAmount = Number(fabricSoftenerCount) * PRICING.fabricSoftenerCost;
 
+    const totalCostNumeric = Number(totalCost) || 0;
+
+    const page = pdfDoc.addPage([400, 600]);
+
+    // Receipt content
     page.drawText("STARWASH RECEIPT", { x: 150, y: 550, size: 16, font: timesRomanFont, color: rgb(0, 0, 0) });
     page.drawText(`Customer Name: ${customerName}`, { x: 50, y: 500, size: 12, font: timesRomanFont });
     page.drawText(`Service: ${services}`, { x: 50, y: 480, size: 12, font: timesRomanFont });
-    page.drawText(`Loads (${numberOfLoads} loads): PHP ${numberOfLoads * PRICING.services[services]}`, {
+    page.drawText(`Loads (${numberOfLoads}): PHP ${Number(numberOfLoads) * PRICING.services[services]}`, {
         x: 50,
         y: 460,
         size: 12,
         font: timesRomanFont,
     });
-    page.drawText(`Detergent: PHP ${detergentAmount}`, { x: 50, y: 440, size: 12, font: timesRomanFont });
-    page.drawText(`Fabric Softener: PHP ${fabricSoftenerAmount}`, { x: 50, y: 420, size: 12, font: timesRomanFont });
-    page.drawText(`Plastic Fee: PHP ${additionalFeesNumeric.toFixed(2)}`, { x: 50, y: 400, size: 12, font: timesRomanFont });
-    page.drawText(`Total Amount: PHP ${totalCost.toFixed(2)}`, { x: 50, y: 380, size: 14, font: timesRomanFont, color: rgb(1, 0, 0) });
+
+    page.drawText(`Detergent: PHP ${detergentAmount.toFixed(2)}`, { x: 50, y: 440, size: 12, font: timesRomanFont });
+    page.drawText(`Fabric Softener: PHP ${fabricSoftenerAmount.toFixed(2)}`, { x: 50, y: 420, size: 12, font: timesRomanFont });
+
+    // Display the plastic fee (₱3 per load)
+    page.drawText(`Plastic Fee: PHP ${plasticFee.toFixed(2)}`, { 
+        x: 50, 
+        y: 400, 
+        size: 12, 
+        font: timesRomanFont 
+    });
+
+    // Total cost calculation (including the dynamic plastic fee)
+    page.drawText(`Total Amount: PHP ${totalCostNumeric.toFixed(2)}`, { 
+        x: 50, 
+        y: 380, 
+        size: 14, 
+        font: timesRomanFont, 
+        color: rgb(1, 0, 0) 
+    });
+
     page.drawText(`Date Created: ${new Date(createdAt).toLocaleString()}`, { x: 50, y: 360, size: 10, font: timesRomanFont });
     if (paidAt) {
         page.drawText(`Date Paid: ${new Date(paidAt).toLocaleString()}`, { x: 50, y: 340, size: 10, font: timesRomanFont });
@@ -438,18 +455,24 @@ async function generateReceiptPDF(data) {
     }
 
     return await pdfDoc.save();
-}
+};
+
 router.get("/branch-stats", isAuthenticated("Staff"), (req, res) => {
     const db = req.app.get("db");
-    const branchId = req.session.user.branch_id;
+    const branchId = req.session.user.branch_id; // Retrieve the branch ID from session
 
     const query = `
         SELECT 
+            branch_id,
             SUM(CASE WHEN payment_status = 'Paid' THEN total_cost ELSE 0 END) AS total_income,
-            SUM(number_of_loads) AS total_sales
+            SUM(CASE WHEN DATE(CONVERT_TZ(created_at, '+00:00', '+08:00')) = CURDATE() THEN number_of_loads ELSE 0 END) AS total_sales
         FROM sales_orders
-        WHERE branch_id = ? 
-        AND DATE(CONVERT_TZ(created_at, '+00:00', '+08:00')) = CURDATE();  -- Convert to PH time (+08:00)
+        WHERE branch_id = ?
+        AND (
+            DATE(CONVERT_TZ(paid_at, '+00:00', '+08:00')) = CURDATE()
+            OR DATE(CONVERT_TZ(created_at, '+00:00', '+08:00')) = CURDATE()
+        )
+        GROUP BY branch_id;
     `;
 
     db.query(query, [branchId], (err, result) => {
@@ -459,14 +482,13 @@ router.get("/branch-stats", isAuthenticated("Staff"), (req, res) => {
         }
 
         const stats = {
-            totalIncome: result[0]?.total_income || 0,
-            totalSales: result[0]?.total_sales || 0,
+            totalIncome: result[0]?.total_income || 0, // Total income for paid transactions today
+            totalSales: result[0]?.total_sales || 0,   // Total loads for today's transactions
         };
 
         res.status(200).json({ success: true, stats });
     });
 });
-
 
 router.get("/load-status", isAuthenticated("Staff"), (req, res) => {
     const db = req.app.get("db");
@@ -488,6 +510,7 @@ router.get("/load-status", isAuthenticated("Staff"), (req, res) => {
         res.status(200).json({ success: true, loadStatus: result });
     });
 });
+
 
 router.post("/update-load-status/:orderId", isAuthenticated("Staff"), (req, res) => {
     const { orderId } = req.params;
@@ -577,6 +600,103 @@ router.get("/todays-transactions", isAuthenticated("Staff"), (req, res) => {
                 totalPages: totalPages, // Include totalPages in the response
             });
         });
+    });
+});
+
+router.get("/:orderId", isAuthenticated("Staff"), (req, res) => {
+    const { orderId } = req.params;
+    const db = req.app.get("db");
+
+    const query = `SELECT * FROM sales_orders WHERE id = ?`;
+    db.query(query, [orderId], (err, result) => {
+        if (err || result.length === 0) {
+            console.error("Error fetching transaction:", err);
+            return res.status(500).json({ success: false, message: "Transaction not found." });
+        }
+        res.status(200).json({ success: true, transaction: result[0] });
+    });
+});
+
+router.post("/update/:orderId", isAuthenticated("Staff"), async (req, res) => {
+    const { orderId } = req.params;
+    const { customer_name, services, number_of_loads, fabric_softener_count, detergent_count, payment_status } = req.body;
+    const db = req.app.get("db");
+
+    const query = `
+        UPDATE sales_orders
+        SET customer_name = ?, services = ?, number_of_loads = ?, fabric_softener_count = ?, detergent_count = ?, payment_status = ?
+        WHERE id = ?;
+    `;
+
+    db.query(
+        query,
+        [customer_name, serivces, number_of_loads, fabric_softener_count, detergent_count, payment_status, orderId],
+        async (err, result) => {
+            if (err) {
+                console.error("Error updating transaction:", err);
+                return res.status(500).json({ success: false, message: "Failed to update transaction." });
+            }
+
+            if (payment_status === "Paid") {
+                // Fetch updated transaction for receipt generation
+                const fetchQuery = `SELECT * FROM sales_orders WHERE id = ?`;
+                db.query(fetchQuery, [orderId], async (fetchErr, fetchResult) => {
+                    if (fetchErr || fetchResult.length === 0) {
+                        console.error("Error fetching updated transaction:", fetchErr);
+                        return res.status(500).json({ success: false, message: "Failed to fetch transaction details." });
+                    }
+
+                    const transaction = fetchResult[0];
+                    try {
+                        const receipt = await generateReceiptPDF({
+                            customerName: transaction.customer_name,
+                            services: transaction.services,
+                            numberOfLoads: transaction.number_of_loads,
+                            detergentCount: transaction.detergent_count,
+                            fabricSoftenerCount: transaction.fabric_softener_count,
+                            additionalFees: transaction.additional_fees,
+                            totalCost: transaction.total_cost,
+                            createdAt: transaction.created_at,
+                            paidAt: new Date(), // Set paidAt to current timestamp
+                            claimedAt: transaction.claimed_at,
+                        });
+
+                        const receiptFileName = `receipt_${orderId}.pdf`;
+                        const filePath = path.join(__dirname, "../receipts", receiptFileName);
+                        fs.writeFileSync(filePath, receipt);
+
+                        return res.status(200).json({
+                            success: true,
+                            message: "Transaction updated and receipt generated.",
+                            receipt: `/receipts/${receiptFileName}`,
+                        });
+                    } catch (err) {
+                        console.error("Error generating receipt:", err);
+                        return res.status(500).json({ success: false, message: "Failed to generate receipt." });
+                    }
+                });
+            } else {
+                res.status(200).json({ success: true, message: "Transaction updated successfully." });
+            }
+        }
+    );
+});
+
+// Add a new request
+app.post("/api/requests/create", (req, res) => {
+    const { branch_id, item_name, quantity } = req.body;
+
+    const query = `
+        INSERT INTO requests (branch_id, item_name, quantity, status)
+        VALUES (?, ?, ?, 'Pending');
+    `;
+
+    db.query(query, [branch_id, item_name, quantity], (err, result) => {
+        if (err) {
+            console.error("Error creating request:", err);
+            return res.status(500).json({ success: false, error: "Failed to create request." });
+        }
+        res.json({ success: true, message: "Request created successfully." });
     });
 });
 

@@ -1,0 +1,55 @@
+<section id="sales-record-overview">
+    <div class="page-header">
+        <div class="page-title">
+            <h1>Sales Record Overview</h1>
+            <p>Review sales data for each branch and analyze trends.</p>
+        </div>
+    </div>
+
+    <div class="sales-filters">
+        <label for="branch-filter">Select Branch</label>
+        <select id="branch-filter" name="branch-filter">
+            <!-- Branch options will be populated dynamically -->
+        </select>
+
+        <label for="date-range">Date Range</label>
+        <input type="date" id="start-date" name="start-date">
+        <input type="date" id="end-date" name="end-date">
+    </div>
+
+    <div class="sales-record-content">
+        <div class="sales-table">
+            <div class="table-header">
+                <h2>Sales Data</h2>
+                <select id="sort-option" name="sort-option">
+                    <option value="date-created">Date Created</option>
+                    <option value="date-paid">Date Paid</option>
+                    <option value="date-claimed">Date Claimed</option>
+                </select>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Fabric</th>
+                        <th>Detergent</th>
+                        <th>Loads</th>
+                        <th>Total Cost</th>
+                        <th>Payment Status</th>
+                        <th>Claimed Status</th>
+                        <th>Date & Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Sales data rows will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination container --><div class="pagination"></div>
+
+    </div>
+</section>
+
+<div class="sales-chart">
+    <!-- Chart will be rendered here -->
+</div>

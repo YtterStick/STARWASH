@@ -9,33 +9,48 @@ document.addEventListener("DOMContentLoaded", () => {
     const salesElement = document.getElementById('today-sales');
 
     function fetchTodayStats() {
+        const incomeElement = document.getElementById("today-income");
+        const salesElement = document.getElementById("today-sales");
+    
+        if (!incomeElement || !salesElement) {
+            console.warn("Income or sales element not found in the DOM.");
+            return;
+        }
+    
         fetch("/api/sales-order/branch-stats")
             .then((response) => response.json())
             .then((data) => {
                 const { totalIncome, totalSales } = data.stats;
-
-                const incomeElement = document.getElementById("today-income");
-                if (incomeElement) {
-                    incomeElement.textContent = `₱${parseFloat(totalIncome).toFixed(2)}`;
-                }
-
-                const salesElement = document.getElementById("today-sales");
-                if (salesElement) {
-                    salesElement.textContent = `${parseInt(totalSales)}`;
-                }
+    
+                const formattedIncome = parseFloat(totalIncome).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                });
+    
+                incomeElement.textContent = `₱${formattedIncome}`;
+    
+                const formattedSales = parseInt(totalSales).toLocaleString("en-US");
+                salesElement.textContent = formattedSales;
             })
             .catch((error) => {
                 console.error("Error fetching today's stats:", error);
             });
     }
-
+    
+    
     function initializeTodaysTransactions() {
         const recordsTable = document.getElementById("records-table");
         const paginationContainer = document.getElementById("pagination-container");
-        const recordsPerPage = 5; // Number of records per page
+    
+        if (!recordsTable) {
+            console.error("Records table element not found.");
+            return;
+        }
+        console.log("Records Table Element:", recordsTable);
+
+        const recordsPerPage = 5;
         let currentPage = 1;
     
-        // Function to fetch and display records for the current page
         function loadRecords(page = 1) {
             fetch(`/api/sales-order/todays-transactions?page=${page}&limit=${recordsPerPage}`)
                 .then((response) => response.json())
@@ -82,24 +97,22 @@ document.addEventListener("DOMContentLoaded", () => {
     
                             transactionsBody.appendChild(row);
     
-                            // Add event listener for edit button
+                            // Add event listeners for buttons
                             row.querySelector(".edit-btn").addEventListener("click", (e) => {
                                 const orderId = e.target.dataset.id;
-                                editTransaction(orderId); // Call edit functionality
+                                editTransaction(orderId);
                             });
     
-                            // Add event listener for delete button
                             row.querySelector(".delete-btn").addEventListener("click", (e) => {
                                 const orderId = e.target.dataset.id;
                                 deleteTransaction(orderId);
                             });
                         });
     
-                        // Update pagination buttons
                         updatePagination(totalPages, page);
                     } else {
                         recordsTable.innerHTML = "<p>No records for today.</p>";
-                        paginationContainer.innerHTML = ""; // Clear pagination if no data
+                        paginationContainer.innerHTML = "";
                     }
                 })
                 .catch((error) => {
@@ -108,11 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
         }
     
-        // Function to handle pagination (Previous & Next buttons)
         function updatePagination(totalPages, currentPage) {
-            paginationContainer.innerHTML = ""; // Clear previous pagination buttons
-    
-            // Create Previous Button if not on the first page
+            paginationContainer.innerHTML = "";
             if (currentPage > 1) {
                 const prevButton = document.createElement("button");
                 prevButton.textContent = "Previous";
@@ -123,12 +133,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 paginationContainer.appendChild(prevButton);
             }
     
-            // Display page number
             const pageNumber = document.createElement("span");
             pageNumber.textContent = `Page ${currentPage} of ${totalPages}`;
             paginationContainer.appendChild(pageNumber);
     
-            // Create Next Button if not on the last page
             if (currentPage < totalPages) {
                 const nextButton = document.createElement("button");
                 nextButton.textContent = "Next";
@@ -140,7 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     
-        // Initial load of records
         loadRecords(currentPage);
     }
     
@@ -177,11 +184,82 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Function to handle edit transaction
     function editTransaction(orderId) {
-        alert(`Edit functionality is triggered for order ID: ${orderId}`);
-        // Implement actual edit functionality here (e.g., open a modal with editable fields)
+        const modal = document.getElementById("edit-transaction-modal");
+        const form = document.getElementById("edit-transaction-form");
+        const closeBtn = document.querySelector(".close-btn");
+        const cancelBtn = document.querySelector(".cancel-btn");
+    
+        // Fetch transaction data and populate the form
+        fetch(`/api/sales-order/${orderId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const transaction = data.transaction;
+                    form["customer_name"].value = transaction.customer_name;
+                    form["services"].value = transaction.services; // Populate service type
+                    form["number_of_loads"].value = transaction.number_of_loads;
+                    form["fabric_softener_count"].value = transaction.fabric_softener_count;
+                    form["detergent_count"].value = transaction.detergent_count;
+                    form["payment_status"].value = transaction.payment_status;
+
+                    modal.style.display = "flex";
+                } else {
+                    alert("Failed to load transaction data.");
+                }
+            })
+            .catch(err => console.error("Error fetching transaction:", err));
+    
+        form.onsubmit = function (e) {
+            e.preventDefault();
+    
+            const formData = new FormData(form);
+            const payload = Object.fromEntries(formData);
+    
+            fetch(`/api/sales-order/update/${orderId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        modal.style.display = "none";
+                        fetchTodayStats();
+                        initializeTodaysTransactions(); 
+                        // Refresh transactions
+    
+                        if (data.receipt) {
+                            showPrintPopup(data.receipt); // Display receipt popup
+                        }
+                    } else {
+                        alert(data.message || "Failed to update transaction.");
+                    }
+                })
+                .catch(err => console.error("Error updating transaction:", err));
+        };
+    
+        closeBtn.onclick = () => (modal.style.display = "none");
+        cancelBtn.onclick = () => (modal.style.display = "none");
     }
     
+    function showPrintPopup(receiptUrl) {
+        const popup = document.getElementById("print-popup");
+        const iframe = document.getElementById("receipt-iframe");
+        const printButton = document.getElementById("print-button");
+        const closeButton = document.getElementById("close-popup");
     
+        iframe.src = receiptUrl;
+        popup.style.display = "flex";
+    
+        printButton.onclick = () => {
+            iframe.contentWindow.print();
+        };
+    
+        closeButton.onclick = () => {
+            popup.style.display = "none";
+        };
+    }
     
 
     if (logoutBtn) {
@@ -229,8 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setActiveLink(section);
                 fetchTodayStats();
                 initializeTodaysTransactions();
-
-                setInterval(fetchTodayStats, 60000);
+            setInterval(fetchTodayStats, 60000);
 
                 if (section === "create-sales-order") {
                     initializeCreateSalesOrder();

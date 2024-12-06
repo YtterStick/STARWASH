@@ -6,6 +6,18 @@
         </div>
     </div>
 
+    <!-- Information Cards for Total Branches and Users -->
+    <div class="branch-summary">
+        <div class="info-card">
+            <h2>Total Branches</h2>
+            <p id="total-branches">Loading...</p>
+        </div>
+        <div class="info-card">
+            <h2>Total Users</h2>
+            <p id="total-users">Loading...</p>
+        </div>
+    </div>
+
     <!-- Form for creating a new branch -->
     <div class="branch-form">
         <h2>Create a New Branch</h2>
@@ -23,5 +35,45 @@
             </div>
         </form>
     </div>
+
+    <!-- Display all branches for management -->
+    <div class="manage-branches">
+        <h2>All Branches</h2>
+        <div class="branches-table">
+            <table class="branches-list-table">
+                <thead>
+                    <tr>
+                        <th>Branch Name</th>
+                        <th>Address</th>
+                        <th>User Count</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="branches-table-body">
+                    <!-- Branches will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="editBranchModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Edit Branch</h2>
+            <form id="edit-branch-form">
+                <input type="hidden" id="edit-branch-id">
+                <div class="form-group">
+                    <label for="edit-branch-name">Branch Name</label>
+                    <input type="text" id="edit-branch-name" placeholder="Enter branch name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-branch-address">Branch Address</label>
+                    <input type="text" id="edit-branch-address" placeholder="Enter branch address">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-submit">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 </section>
-<script src="/scripts/createBranch.js"></script>
