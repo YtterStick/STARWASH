@@ -84,7 +84,6 @@
     "statuses": "^2.0.1",
     "toidentifier": "^1.0.1",
     "tslib": "^1.14.1",
-    "twilio": "^5.3.6",
     "type-is": "^1.6.18",
     "uid-safe": "^2.1.5",
     "unpipe": "^1.0.0",
