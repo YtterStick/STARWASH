@@ -30,15 +30,9 @@ function updateReportChart(data) {
     const deductedAmounts = chartData.map(stat => stat.deducted_amount);
     const sales = chartData.map(stat => stat.sales);
 
-    // If chart instance exists, update it
+    // If chart instance exists, destroy it before creating a new one
     if (reportChartInstance) {
-        reportChartInstance.data.labels = months;
-        reportChartInstance.data.datasets[0].data = incomes;
-        reportChartInstance.data.datasets[1].data = expectedIncomes;
-        reportChartInstance.data.datasets[2].data = deductedAmounts;
-        reportChartInstance.data.datasets[3].data = sales;
-        reportChartInstance.update(); // Update the chart with new data
-        return;
+        reportChartInstance.destroy();
     }
 
     // Create a new chart instance
@@ -84,7 +78,7 @@ function updateReportChart(data) {
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            aspectRatio: 3, 
+            aspectRatio: 3,
             scales: {
                 y1: {
                     type: "linear",
@@ -110,7 +104,7 @@ function updateReportChart(data) {
                         color: "white",
                     },
                     grid: {
-                        drawOnChartArea: false, // Disable grid lines for y2
+                        drawOnChartArea: false,
                     },
                 },
                 x: {
@@ -133,6 +127,5 @@ function updateReportChart(data) {
         },
     };
 
-    // Create a new chart
     reportChartInstance = new Chart(ctx, config);
 }
