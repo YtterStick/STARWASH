@@ -11,24 +11,24 @@ document.addEventListener("DOMContentLoaded", () => {
     function fetchTodayStats() {
         const incomeElement = document.getElementById("today-income");
         const salesElement = document.getElementById("today-sales");
-    
+
         if (!incomeElement || !salesElement) {
             console.warn("Income or sales element not found in the DOM.");
             return;
         }
-    
+
         fetch("/api/sales-order/branch-stats")
             .then((response) => response.json())
             .then((data) => {
                 const { totalIncome, totalSales } = data.stats;
-    
+
                 const formattedIncome = parseFloat(totalIncome).toLocaleString("en-US", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                 });
-    
+
                 incomeElement.textContent = `₱${formattedIncome}`;
-    
+
                 const formattedSales = parseInt(totalSales).toLocaleString("en-US");
                 salesElement.textContent = formattedSales;
             })
@@ -36,12 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Error fetching today's stats:", error);
             });
     }
-    
-    
+
+
     function initializeTodaysTransactions() {
         const recordsTable = document.getElementById("records-table");
         const paginationContainer = document.getElementById("pagination-container");
-    
+
         if (!recordsTable) {
             console.error("Records table element not found.");
             return;
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const recordsPerPage = 5;
         let currentPage = 1;
-    
+
         function loadRecords(page = 1) {
             fetch(`/api/sales-order/todays-transactions?page=${page}&limit=${recordsPerPage}`)
                 .then((response) => response.json())
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (data.success) {
                         const transactions = data.transactions;
                         const totalPages = data.totalPages;
-    
+
                         // Clear previous table content
                         recordsTable.innerHTML = `
                             <table class="sales-record-table">
@@ -75,9 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <tbody id="transactions-body"></tbody>
                             </table>
                         `;
-    
+
                         const transactionsBody = document.getElementById("transactions-body");
-    
+
                         transactions.forEach((transaction) => {
                             const row = document.createElement("tr");
                             row.innerHTML = `
@@ -94,21 +94,21 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </button>
                                 </td>
                             `;
-    
+
                             transactionsBody.appendChild(row);
-    
+
                             // Add event listeners for buttons
                             row.querySelector(".edit-btn").addEventListener("click", (e) => {
                                 const orderId = e.target.dataset.id;
                                 editTransaction(orderId);
                             });
-    
+
                             row.querySelector(".delete-btn").addEventListener("click", (e) => {
                                 const orderId = e.target.dataset.id;
                                 deleteTransaction(orderId);
                             });
                         });
-    
+
                         updatePagination(totalPages, page);
                     } else {
                         recordsTable.innerHTML = "<p>No records for today.</p>";
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     recordsTable.innerHTML = "<p>Error loading records. Please try again later.</p>";
                 });
         }
-    
+
         function updatePagination(totalPages, currentPage) {
             paginationContainer.innerHTML = "";
             if (currentPage > 1) {
@@ -132,11 +132,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 paginationContainer.appendChild(prevButton);
             }
-    
+
             const pageNumber = document.createElement("span");
             pageNumber.textContent = `Page ${currentPage} of ${totalPages}`;
             paginationContainer.appendChild(pageNumber);
-    
+
             if (currentPage < totalPages) {
                 const nextButton = document.createElement("button");
                 nextButton.textContent = "Next";
@@ -147,10 +147,69 @@ document.addEventListener("DOMContentLoaded", () => {
                 paginationContainer.appendChild(nextButton);
             }
         }
-    
+
         loadRecords(currentPage);
     }
-    
+
+    // Function to handle edit transaction
+    function editTransaction(orderId) {
+        const modal = document.getElementById("edit-transaction-modal");
+        const form = document.getElementById("edit-transaction-form");
+        const closeBtn = document.querySelector(".close-btn");
+        const cancelBtn = document.querySelector(".cancel-btn");
+
+        // Fetch transaction data and populate the form
+        fetch(`/api/sales-order/${orderId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const transaction = data.transaction;
+                    form["customer_name"].value = transaction.customer_name;
+                    form["services"].value = transaction.services; // Populate service type
+                    form["number_of_loads"].value = transaction.number_of_loads;
+                    form["fabric_softener_count"].value = transaction.fabric_softener_count;
+                    form["detergent_count"].value = transaction.detergent_count;
+                    form["payment_status"].value = transaction.payment_status;
+
+                    modal.style.display = "flex";
+                } else {
+                    alert("Failed to load transaction data.");
+                }
+            })
+            .catch(err => console.error("Error fetching transaction:", err));
+
+        form.onsubmit = function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const payload = Object.fromEntries(formData);
+
+            fetch(`/api/sales-order/update/${orderId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        modal.style.display = "none";
+                        initializeTodaysTransactions(); // Refresh transactions
+
+                        if (data.receipt) {
+                            showPrintPopup(data.receipt); // Display receipt popup
+                        }
+                    } else {
+                        alert(data.message || "Failed to update transaction.");
+                    }
+                })
+                .catch(err => console.error("Error updating transaction:", err));
+        };
+
+        closeBtn.onclick = () => (modal.style.display = "none");
+        cancelBtn.onclick = () => (modal.style.display = "none");
+    }
+
     // Function to handle delete transaction
     function deleteTransaction(orderId) {
         if (!orderId) {
@@ -158,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Invalid transaction selected for deletion.");
             return;
         }
-    
+
         fetch(`/api/sales-order/delete-transaction/${orderId}`, {
             method: "DELETE",
         })
@@ -181,86 +240,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Error deleting transaction. Please try again later.");
             });
     }
-    
-    // Function to handle edit transaction
-    function editTransaction(orderId) {
-        const modal = document.getElementById("edit-transaction-modal");
-        const form = document.getElementById("edit-transaction-form");
-        const closeBtn = document.querySelector(".close-btn");
-        const cancelBtn = document.querySelector(".cancel-btn");
-    
-        // Fetch transaction data and populate the form
-        fetch(`/api/sales-order/${orderId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const transaction = data.transaction;
-                    form["customer_name"].value = transaction.customer_name;
-                    form["services"].value = transaction.services; // Populate service type
-                    form["number_of_loads"].value = transaction.number_of_loads;
-                    form["fabric_softener_count"].value = transaction.fabric_softener_count;
-                    form["detergent_count"].value = transaction.detergent_count;
-                    form["payment_status"].value = transaction.payment_status;
 
-                    modal.style.display = "flex";
-                } else {
-                    alert("Failed to load transaction data.");
-                }
-            })
-            .catch(err => console.error("Error fetching transaction:", err));
-    
-        form.onsubmit = function (e) {
-            e.preventDefault();
-    
-            const formData = new FormData(form);
-            const payload = Object.fromEntries(formData);
-    
-            fetch(`/api/sales-order/update/${orderId}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(data.message);
-                        modal.style.display = "none";
-                        fetchTodayStats();
-                        initializeTodaysTransactions(); 
-                        // Refresh transactions
-    
-                        if (data.receipt) {
-                            showPrintPopup(data.receipt); // Display receipt popup
-                        }
-                    } else {
-                        alert(data.message || "Failed to update transaction.");
-                    }
-                })
-                .catch(err => console.error("Error updating transaction:", err));
-        };
-    
-        closeBtn.onclick = () => (modal.style.display = "none");
-        cancelBtn.onclick = () => (modal.style.display = "none");
-    }
-    
+    // Show Print Popup for Receipt
     function showPrintPopup(receiptUrl) {
         const popup = document.getElementById("print-popup");
         const iframe = document.getElementById("receipt-iframe");
         const printButton = document.getElementById("print-button");
         const closeButton = document.getElementById("close-popup");
-    
+
         iframe.src = receiptUrl;
         popup.style.display = "flex";
-    
+
         printButton.onclick = () => {
             iframe.contentWindow.print();
         };
-    
+
         closeButton.onclick = () => {
             popup.style.display = "none";
         };
     }
-    
+
+
 
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setActiveLink(section);
                 fetchTodayStats();
                 initializeTodaysTransactions();
-            setInterval(fetchTodayStats, 60000);
+                setInterval(fetchTodayStats, 60000);
 
                 if (section === "create-sales-order") {
                     initializeCreateSalesOrder();
@@ -319,6 +319,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     initializeViewSalesRecord();
                 } else if (section === "load-status") {
                     initializeLoadStatus();
+                } else if (section === 'inventory'){
+                    initializeStaff();
                 }
             })
             .catch(error => {
@@ -748,6 +750,99 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
+    //inventory
+      // Function to open the request modal
+      function openRequestModal(item) {
+        selectedItem = item; // Set the selected item (Plastic, Detergent, Fabric)
+        document.getElementById("request-modal").style.display = "block";  // Show the modal
+    }
+
+    function closeModal() {
+        document.getElementById("request-modal").style.display = "none";  
+    }
+
+    function handleRequestFormSubmit(e) {
+        e.preventDefault();
+
+        const branchId = 1;
+        const quantity = document.getElementById("quantity").value;
+
+        fetch("/api/requests/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ branch_id: branchId, item_name: selectedItem, quantity })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Request created successfully!");
+                    closeModal();
+                    updateRequestButton(selectedItem);
+                }
+            })
+            .catch(err => console.error("Error creating request:", err));
+    }
+
+    function updateRequestButton(itemName) {
+        const button = document.getElementById(`request-${itemName.toLowerCase()}`);
+        if (button) {
+            button.textContent = "To Be Requested";
+            button.disabled = true; 
+        }
+    }
+
+    function fetchRequests() {
+        const branchId = 1;  
+        fetch(`/api/requests/list?branch_id=${branchId}`)
+            .then(response => response.json())
+            .then(data => {
+                const requests = data.requests;
+                requests.forEach(request => {
+                    // For each request, check the item and update the button text based on the status
+                    const itemButton = document.getElementById(`request-${request.item_name.toLowerCase()}`);
+                    if (itemButton) {
+                        if (request.status === 'Pending') {
+                            itemButton.textContent = `Request Pending`;  // Disable further requests
+                            itemButton.disabled = true;  // Disable the button if the request is pending
+                        } else if (request.status === 'Sent') {
+                            itemButton.textContent = `Request Sent`;  // Update button to indicate sent status
+                            itemButton.disabled = true;  // Disable further requests if the item is sent
+                        } else {
+                            itemButton.textContent = `Request ${request.item_name}`;  // Default button text
+                            itemButton.disabled = false;  // Enable the button if the item is available for requesting
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error("Error fetching requests:", error));
+    }
+
+    function attachRequestButtons() {
+        const plasticButton = document.getElementById("request-plastic");
+        if (plasticButton) plasticButton.addEventListener("click", function () { openRequestModal('Plastic'); });
+
+        const detergentButton = document.getElementById("request-detergent");
+        if (detergentButton) detergentButton.addEventListener("click", function () { openRequestModal('Detergent'); });
+
+        const fabricButton = document.getElementById("request-fabric");
+        if (fabricButton) fabricButton.addEventListener("click", function () { openRequestModal('Fabric'); });
+    }
+
+    function attachCloseModal() {
+        const closeModalBtn = document.querySelector(".close-btn");
+        if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
+    }
+
+    function attachSubmitHandler() {
+        const requestForm = document.getElementById("request-form");
+        if (requestForm) requestForm.addEventListener("submit", handleRequestFormSubmit);
+    }
+    function initializeStaff() {
+        attachRequestButtons();  // Attach event listeners to the request buttons
+        attachCloseModal();  // Attach close modal functionality
+        attachSubmitHandler();  // Attach form submission handler
+        fetchRequests();  // Fetch the current requests status when the page loads
+    }
 
     loadContent("dashboard"); // Load default section on start
 });

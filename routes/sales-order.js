@@ -630,7 +630,7 @@ router.post("/update/:orderId", isAuthenticated("Staff"), async (req, res) => {
 
     db.query(
         query,
-        [customer_name, serivces, number_of_loads, fabric_softener_count, detergent_count, payment_status, orderId],
+        [customer_name, services, number_of_loads, fabric_softener_count, detergent_count, payment_status, orderId],
         async (err, result) => {
             if (err) {
                 console.error("Error updating transaction:", err);
@@ -683,9 +683,9 @@ router.post("/update/:orderId", isAuthenticated("Staff"), async (req, res) => {
 });
 
 // Add a new request
-app.post("/api/requests/create", (req, res) => {
+router.post("/requests/create", (req, res) => {
     const { branch_id, item_name, quantity } = req.body;
-
+    const db = req.app.get('db');
     const query = `
         INSERT INTO requests (branch_id, item_name, quantity, status)
         VALUES (?, ?, ?, 'Pending');
@@ -700,5 +700,22 @@ app.post("/api/requests/create", (req, res) => {
     });
 });
 
+router.get("/requests/list", (req, res) => {
+    const branch_id = req.query.branch_id;  // Assuming branch_id is passed in the query params
+const db = req.app.get('db');
+    const query = `
+        SELECT item_name, quantity, status 
+        FROM requests 
+        WHERE branch_id = ? 
+        ORDER BY created_at DESC;
+    `;
 
+    db.query(query, [branch_id], (err, results) => {
+        if (err) {
+            console.error("Error fetching requests:", err);
+            return res.status(500).json({ success: false, error: "Failed to fetch requests." });
+        }
+        res.json({ success: true, requests: results });
+    });
+});
 module.exports = router;

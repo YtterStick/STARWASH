@@ -9,7 +9,7 @@
             <h3>Total Plastic</h3>
             <p id="plastic-stock">Stock: 1000 units</p>
             <p>Used: <span id="plastic-used">200 units</span></p>
-            <button class="request-btn" id="request-plastic">Request Plastic</button>
+            <button class="request-btn" id="request-plastic" onclick="openRequestModal('Plastic')">Request Plastic</button>
         </div>
 
         <!-- Total Detergent -->
@@ -17,7 +17,7 @@
             <h3>Total Detergent</h3>
             <p id="detergent-stock">Stock: 500 units</p>
             <p>Used: <span id="detergent-used">100 units</span></p>
-            <button class="request-btn" id="request-detergent">Request Detergent</button>
+            <button class="request-btn" id="request-detergent" onclick="openRequestModal('Detergent')">Request Detergent</button>
         </div>
 
         <!-- Total Fabric Softener -->
@@ -25,7 +25,7 @@
             <h3>Total Fabric Softener</h3>
             <p id="fabric-softener-stock">Stock: 300 units</p>
             <p>Used: <span id="fabric-used">50 units</span></p>
-            <button class="request-btn" id="request-fabric">Request Fabric</button>
+            <button class="request-btn" id="request-fabric" onclick="openRequestModal('Fabric')">Request Fabric</button>
         </div>
     </div>
 
@@ -34,3 +34,17 @@
         <p id="unclaimed-loads">Total Unclaimed Loads: 15</p> <!-- Placeholder -->
     </div>
 </div>
+
+<!-- Request Form Modal -->
+
+</div>
+<div id="request-modal" class="modal-request" style="display: none;">
+    <div class="modal-content-request">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Request Item</h2>
+        <form id="request-form">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>

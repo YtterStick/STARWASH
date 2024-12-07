@@ -72,6 +72,8 @@ app.use('/api/dashboard', dashboardRoutes);
 
 const salesOrderRoutes = require('./routes/sales-order');
 app.use('/api/sales-order', salesOrderRoutes);
+app.use("/api",salesOrderRoutes);
+
 app.use("/components", express.static("components"));
 app.use("/api/users", require("./routes/users"));
 app.use("/receipts", express.static(path.join(__dirname, "receipts")));

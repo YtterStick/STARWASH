@@ -25,10 +25,6 @@ function fetchTotalCounts() {
             console.error('Error fetching total users:', error);
         });
 }
-
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
     const links = document.querySelectorAll('.nav-link[data-section]');
     const mainContent = document.getElementById('main-content-id');
@@ -143,8 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 mainContent.innerHTML = `<p>Error loading content: ${error.message}</p>`;
             });
     }
-    
-    
     
     function setActiveLink(activeSection) {
         links.forEach(link => {

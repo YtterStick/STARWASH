@@ -587,6 +587,92 @@ body {
   border-color: #6359E9;
 }
 
+.modal-request {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 20px;
+}
+.modal-request .modal-content-request {
+  background-color: #1D1D41;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  text-align: center;
+  max-height: 80%;
+  overflow-y: auto;
+  /* Close Button */
+  /* Modal Title */
+  /* Form Styles */
+}
+.modal-request .modal-content-request .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.modal-request .modal-content-request .close-btn:hover {
+  color: #ff5c5c;
+}
+.modal-request .modal-content-request h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+.modal-request .modal-content-request #request-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.modal-request .modal-content-request #request-form label {
+  font-size: 16px;
+  color: #FFFFFF;
+  margin-bottom: 5px;
+}
+.modal-request .modal-content-request #request-form input {
+  width: 80%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #141332;
+  border: 1px solid #141332;
+  border-radius: 4px;
+  outline: none;
+  transition: border 0.3s;
+}
+.modal-request .modal-content-request #request-form input:focus {
+  border-color: #6359E9;
+}
+.modal-request .modal-content-request #request-form button {
+  background-color: #6359E9;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.modal-request .modal-content-request #request-form button:hover {
+  background-color: rgb(56.6808510638, 43.9680851064, 227.0319148936);
+}
+
 .inventory-section {
   padding: 20px;
   background-color: #1D1D41;

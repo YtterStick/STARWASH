@@ -125,7 +125,7 @@
     .logout {
         position: relative;
         left: 0;
-    }
+    }   
 
     .account { 
         margin-top: 7.7rem;// Space above the logout button
@@ -827,180 +827,195 @@
         }
         
     }
-    
-    
-    
-    #inventory-overview {
+       
+   //inventroy
+ // Main container for the admin inventory
+.admin-inventory {
+    padding: 20px;
+    font-family: $fonts;
+    background-color: $bg-color-secondary;
+    color: $white-color;
+
+    // Header section
+    .admin-header {
+        margin-bottom: 30px;
+
+        h1 {
+            font-size: 28px;
+            color: $white-color;
+        }
+
+        p {
+            font-size: 16px;
+            color: white;
+        }
+    }
+
+    // Branch filter section
+    .branch-filter {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        label {
+            font-size: 16px;
+            margin-right: 10px;
+            color: $white-color;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid $strip-color;
+            border-radius: 4px;
+            background-color: $bg-color-secondary;
+            color: $white-color;
+
+            &:focus {
+                outline: none;
+                border-color: $primary-color;
+            }
+        }
+    }
+
+    // Admin section to display inventory
+    .admin-section {
+        margin-bottom: 30px;
+        background-color: $bg-color;
         padding: 20px;
-        background-color: $bg-color-secondary;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    
-        .page-title {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        h2 {
+            font-size: 22px;
             margin-bottom: 15px;
-    
-            h1 {
-                font-size: 24px;
-                font-weight: 600;
-                color: $white-color;
-            }
-    
-            p {
-                font-size: 16px;
-                color: #A6A6A6;
-            }
+            color: $white-color;
         }
-    
-        .inventory-table {
-            margin-top: 20px;
-    
-            table {
-                width: 100%;
-                border-collapse: collapse;
-    
-                th, td {
-                    padding: 10px;
-                    border: 1px solid $strip-color;
-                    text-align: left;
-                    font-size: 14px;
-                }
-    
-                th {
-                    background-color: $strip-color;
-                    color: $white-color;
-                    font-weight: bold;
-                }
-    
-                td {
-                    background-color: $bg-color;
-                    color: $white-color;
-                }
-    
-                .action-btn {
-                    padding: 5px 10px;
-                    border: none;
-                    border-radius: 5px;
-                    font-size: 14px;
-                    cursor: pointer;
-                    transition: background-color 0.3s;
-    
-                    &.review {
-                        background-color: #4caf50;
-                        color: white;
-                    }
-    
-                    &:hover {
-                        background-color: lighten($primary-color, 10%);
-                    }
-                }
-            }
-    
-            tr:hover {
-                background-color: $primary-color;
-            }
-        }
-    
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+
+        .admin-table {
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-    
-            &.show {
-                display: flex;
+            border-collapse: collapse;
+
+            thead {
+                background-color: $primary-color;
+                color: $white-color;
+
+                tr {
+                    th {
+                        padding: 10px;
+                        text-align: left;
+                        font-size: 16px;
+                        border: 1px solid $strip-color;
+                    }
+                }
             }
-    
-            .modal-content {
-                background-color: $bg-color-secondary;
-                padding: 20px;
-                border-radius: 10px;
-                width: 400px;
-                max-width: 100%;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    
-                .modal-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 20px;
-    
-                    h2 {
-                        font-size: 18px;
-                        color: $white-color;
-                    }
-    
-                    .close-btn {
-                        font-size: 20px;
-                        color: $white-color;
-                        cursor: pointer;
-                    }
-                }
-    
-                .modal-body {
-                    .form-group {
-                        margin-bottom: 15px;
-    
-                        label {
-                            display: block;
-                            font-size: 14px;
-                            color: $white-color;
-                            margin-bottom: 5px;
-                        }
-    
-                        input {
-                            width: 100%;
-                            padding: 10px;
-                            background-color: $bg-color;
-                            border: 1px solid $white-color;
-                            border-radius: 5px;
-                            color: $white-color;
-                            font-size: 14px;
-    
-                            &:focus {
-                                outline: none;
-                                border-color: $primary-color;
-                            }
-                        }
-                    }
-                }
-    
-                .modal-footer {
-                    display: flex;
-                    justify-content: flex-end;
-                    gap: 10px;
-    
-                    .btn {
-                        padding: 10px 15px;
-                        border: none;
-                        border-radius: 5px;
+
+            tbody {
+                tr {
+                    td {
+                        padding: 10px;
                         font-size: 14px;
-                        cursor: pointer;
-                        transition: background-color 0.3s;
-    
-                        &.approve {
-                            background-color: $primary-color;
+                        border: 1px solid $strip-color;
+                        color: $white-color;
+
+                        .add-stock-input {
+                            width: 100px;
+                            padding: 5px;
+                            font-size: 14px;
+                            margin-right: 10px;
+                            border-radius: 4px;
+                            border: 1px solid $strip-color;
+                            background-color: $bg-color-secondary;
                             color: $white-color;
                         }
-    
-                        &.cancel {
-                            background-color: $highlight-color;
-                            color: $white-color;
-                        }
-    
-                        &:hover {
-                            opacity: 0.9;
+
+                        .btn {
+                            padding: 5px 10px;
+                            border: none;
+                            border-radius: 4px;
+                            font-size: 14px;
+                            cursor: pointer;
+
+                            &.btn-success {
+                                background-color: $highlight-color;
+                                color: $white-color;
+
+                                &:hover {
+                                    background-color: lighten($highlight-color, 10%);
+                                }
+                            }
+
+                            &.btn-info {
+                                background-color: $primary-color;
+                                color: $white-color;
+
+                                &:hover {
+                                    background-color: darken($primary-color, 10%);
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     }
-    
+
+    // Modal for reviewing requests
+    #review-request-modal {
+        display: none; /* Hidden by default */
+        position: fixed; 
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        
+        .modal-content {
+            background-color: $bg-color;
+            padding: 20px;
+            margin: 10% auto;
+            width: 60%;
+            border-radius: 8px;
+            color: $white-color;
+
+            h2 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            #modal-items {
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+
+                &.btn-primary {
+                    background-color: $primary-color;
+                    color: $white-color;
+
+                    &:hover {
+                        background-color: darken($primary-color, 10%);
+                    }
+                }
+            }
+
+            .close-btn {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 30px;
+                color: $white-color;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
     #sales-record-overview {
         border-radius: 10px;
         background-color: $bg-color-secondary;
