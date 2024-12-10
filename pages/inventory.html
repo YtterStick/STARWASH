@@ -1,48 +1,60 @@
-<div id="admin-inventory" class="admin-inventory">
-    <div class="admin-header">
-        <h1>Inventory</h1>
-        <p>Add and review inventory of your branches.</p>
-    </div>
+<div id="inventory-section">
+    <h1>Branch Inventory</h1>
 
     <!-- Branch Filter -->
-    <div class="branch-filter">
-        <label for="branch-select">Filter by Branch:</label>
-        <select id="branch-select" onchange="filterByBranch()">
-            <!-- Options will be populated dynamically -->
-            <option value="all">All Branches</option>
+    <div class="branch-filter-container">
+        <label for="branch-filter">Select Branch</label>
+        <select id="branch-filter" name="branch_id" required>
+            <!-- Branch options will be dynamically populated here -->
         </select>
     </div>
 
-    <!-- Inventory Tracking Section -->
-    <div class="admin-section">
-        <h2>Branch Inventory</h2>
-        <table class="admin-table">
+    <!-- Inventory Tracking Table -->
+    <div class="inventory-table-container">
+        <table class="inventory-table">
             <thead>
                 <tr>
-                    <th>Branch</th>
                     <th>Item</th>
-                    <th>Current Stock</th>
-                    <th>Add Stock</th>
-                    <th>Review Request</th>
+                    <th>Quantity</th>
+                    <th>Last Updated</th>
                 </tr>
             </thead>
-            <tbody id="inventory-tracking-table">
-                <!-- Inventory will be dynamically populated -->
+            <tbody id="inventory-table-body">
+                <!-- Inventory data for the selected branch will be dynamically populated here -->
             </tbody>
         </table>
     </div>
 
-    <!-- Review Request Modal -->
-    <div id="review-request-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeReviewModal()">&times;</span>
-            <h2>Review Request</h2>
-            <form id="review-request-form">
-                <div id="modal-items">
-                    <!-- Requested items will be dynamically populated here -->
+    <!-- Add Inventory Form -->
+    <div class="add-inventory-container">
+        <h2>Add Inventory</h2>
+        <form id="add-inventory-form">
+            <div class="form-group">
+                <label>Select Items to Add</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="item" value="Fabric Softener" />
+                        Fabric Softener
+                    </label>
+                    <input type="number" name="quantity_Fabric_Softener" placeholder="Quantity" min="1" disabled />
                 </div>
-                <button type="submit" class="btn btn-primary">Send</button>
-            </form>
-        </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="item" value="Detergent" />
+                        Detergent
+                    </label>
+                    <input type="number" name="quantity_Detergent" placeholder="Quantity" min="1" disabled />
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="item" value="Plastic" />
+                        Plastic
+                    </label>
+                    <input type="number" name="quantity_Plastic" placeholder="Quantity" min="1" disabled />
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Add Inventory</button>
+        </form>
     </div>
 </div>

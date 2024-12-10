@@ -1,50 +1,19 @@
-<div id="inventory-section" class="inventory-section">
-    <div class="inventory-header">
-        <h2>Inventory Management</h2>
-    </div>
+<div id="staff-inventory-section">
+    <h1>Inventory</h1>
 
-    <div class="inventory-grid">
-        <!-- Total Plastic -->
-        <div class="inventory-item">
-            <h3>Total Plastic</h3>
-            <p id="plastic-stock">Stock: 1000 units</p>
-            <p>Used: <span id="plastic-used">200 units</span></p>
-            <button class="request-btn" id="request-plastic" onclick="openRequestModal('Plastic')">Request Plastic</button>
-        </div>
-
-        <!-- Total Detergent -->
-        <div class="inventory-item">
-            <h3>Total Detergent</h3>
-            <p id="detergent-stock">Stock: 500 units</p>
-            <p>Used: <span id="detergent-used">100 units</span></p>
-            <button class="request-btn" id="request-detergent" onclick="openRequestModal('Detergent')">Request Detergent</button>
-        </div>
-
-        <!-- Total Fabric Softener -->
-        <div class="inventory-item">
-            <h3>Total Fabric Softener</h3>
-            <p id="fabric-softener-stock">Stock: 300 units</p>
-            <p>Used: <span id="fabric-used">50 units</span></p>
-            <button class="request-btn" id="request-fabric" onclick="openRequestModal('Fabric')">Request Fabric</button>
-        </div>
-    </div>
-
-    <div class="inventory-summary">
-        <h3>Unclaimed Loads</h3>
-        <p id="unclaimed-loads">Total Unclaimed Loads: 15</p> <!-- Placeholder -->
+    <!-- Inventory Table -->
+    <div class="inventory-table-container">
+        <table class="inventory-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+            <tbody id="staff-inventory-table-body">
+                <!-- Inventory data will be dynamically populated here -->
+            </tbody>
+        </table>
     </div>
 </div>
-
-<!-- Request Form Modal -->
-
-</div>
-<div id="request-modal" class="modal-request" style="display: none;">
-    <div class="modal-content-request">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h2>Request Item</h2>
-        <form id="request-form">
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" min="1" required>
-            <button type="submit">Submit Request</button>
-        </form>
-    </div>

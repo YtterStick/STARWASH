@@ -12,8 +12,9 @@
             <!-- Branch options will be populated dynamically -->
         </select>
 
-        <label for="date-range">Date Range</label>
+        <label for="start-date">Start Date</label>
         <input type="date" id="start-date" name="start-date">
+        <label for="end-date">End Date</label>
         <input type="date" id="end-date" name="end-date">
     </div>
 
@@ -25,18 +26,24 @@
                 <option value="date-paid">Date Paid</option>
             </select>
         </div>
+
         <table>
             <thead>
                 <tr>
                     <th>Customer Name</th>
                     <th>Loads</th>
                     <th>Date & Time</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Distribution data rows will be populated here -->
+            <tbody id="distribution-orders-body">
+                <!-- Data rows will be populated dynamically -->
             </tbody>
         </table>
+    </div>
+
+    <div class="pagination">
+        <button id="prev-page">Previous</button>
+        <span id="current-page">1</span>
+        <button id="next-page">Next</button>
     </div>
 </section>

@@ -94,13 +94,13 @@ body {
 
 .account,
 .logout {
-  position: relative;
+  width: 100%;
+  position: absolute;
   left: 0;
 }
 
 .account {
-  margin-top: 7.7rem;
-  display: flex;
+  bottom: 40px;
   align-items: center;
   padding: 10px;
 }
@@ -263,7 +263,8 @@ body {
   color: #FFFFFF;
   margin-bottom: 5px;
 }
-#account-management .account-form .form-group input, #account-management .account-form .form-group select {
+#account-management .account-form .form-group input,
+#account-management .account-form .form-group select {
   width: 100%;
   padding: 12px;
   background-color: #141332;
@@ -272,7 +273,8 @@ body {
   color: #FFFFFF;
   font-size: 14px;
 }
-#account-management .account-form .form-group input:focus, #account-management .account-form .form-group select:focus {
+#account-management .account-form .form-group input:focus,
+#account-management .account-form .form-group select:focus {
   outline: none;
   border-color: #6359E9;
 }
@@ -316,7 +318,8 @@ body {
   width: 100%;
   border-collapse: collapse;
 }
-.account-list .card-content .table-container table th, .account-list .card-content .table-container table td {
+.account-list .card-content .table-container table th,
+.account-list .card-content .table-container table td {
   padding: 10px;
   border: 1px solid #444;
   font-size: 14px;
@@ -384,9 +387,98 @@ body {
   transform: scale(1.05);
 }
 .account-list .card-content .pagination button:disabled {
-  background-color: #888;
+  background-color: #141332;
   cursor: not-allowed;
   opacity: 0.6;
+}
+.account-list .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.account-list .modal.show {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+}
+.account-list .modal .modal-content {
+  background: #1D1D41;
+  padding: 30px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.account-list .modal .modal-content .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.account-list .modal .modal-content .close-btn:hover {
+  transform: rotate(90deg);
+}
+.account-list .modal .modal-content .form-group {
+  margin-bottom: 20px;
+}
+.account-list .modal .modal-content .form-group label {
+  display: block;
+  font-size: 16px;
+  color: #FFFFFF;
+  margin-bottom: 5px;
+}
+.account-list .modal .modal-content .form-group input,
+.account-list .modal .modal-content .form-group select {
+  width: 100%;
+  padding: 12px;
+  background-color: #141332;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+  color: #FFFFFF;
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  position: relative;
+  transition: border-color 0.3s;
+}
+.account-list .modal .modal-content .form-group input:focus,
+.account-list .modal .modal-content .form-group select:focus {
+  border-color: #6359E9;
+}
+.account-list .modal .modal-content .form-group select {
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1em;
+  padding-right: 30px;
+  cursor: pointer;
+}
+.account-list .modal .modal-content .btn-submit {
+  background-color: #6359E9;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+.account-list .modal .modal-content .btn-submit:hover {
+  background-color: rgb(56.6808510638, 43.9680851064, 227.0319148936);
 }
 
 .report-section {
@@ -402,7 +494,8 @@ body {
   font-size: 14px;
   color: #FFFFFF;
 }
-.report-section .filters select, .report-section .filters input {
+.report-section .filters select,
+.report-section .filters input {
   padding: 8px 12px;
   border: 1px solid #FFFFFF;
   border-radius: 5px;
@@ -491,7 +584,8 @@ body {
   color: #FFFFFF;
   margin-bottom: 5px;
 }
-.popup .popup-content .form-group input, .popup .popup-content .form-group select {
+.popup .popup-content .form-group input,
+.popup .popup-content .form-group select {
   width: 100%;
   padding: 12px;
   background-color: #141332;
@@ -500,7 +594,8 @@ body {
   color: #FFFFFF;
   font-size: 14px;
 }
-.popup .popup-content .form-group input:focus, .popup .popup-content .form-group select:focus {
+.popup .popup-content .form-group input:focus,
+.popup .popup-content .form-group select:focus {
   outline: none;
   border-color: #6359E9;
 }
@@ -589,7 +684,7 @@ body {
   transition: background-color 0.3s;
 }
 #create-branch .branch-form .form-group .btn-submit:hover {
-  background-color: rgb(56.6808510638, 43.9680851064, 227.0319148936);
+  background-color: #6359E9;
 }
 #create-branch .manage-branches {
   background-color: #141332;
@@ -619,7 +714,8 @@ body {
   justify-content: center;
   gap: 10px;
 }
-#create-branch .manage-branches #branches-table-body tr .edit-btn, #create-branch .manage-branches #branches-table-body tr .delete-btn {
+#create-branch .manage-branches #branches-table-body tr .edit-btn,
+#create-branch .manage-branches #branches-table-body tr .delete-btn {
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 14px;
@@ -628,18 +724,22 @@ body {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-#create-branch .manage-branches #branches-table-body tr .edit-btn.edit-btn, #create-branch .manage-branches #branches-table-body tr .delete-btn.edit-btn {
+#create-branch .manage-branches #branches-table-body tr .edit-btn.edit-btn,
+#create-branch .manage-branches #branches-table-body tr .delete-btn.edit-btn {
   background-color: rgb(21, 192, 21);
   color: #FFFFFF;
 }
-#create-branch .manage-branches #branches-table-body tr .edit-btn.edit-btn:hover, #create-branch .manage-branches #branches-table-body tr .delete-btn.edit-btn:hover {
+#create-branch .manage-branches #branches-table-body tr .edit-btn.edit-btn:hover,
+#create-branch .manage-branches #branches-table-body tr .delete-btn.edit-btn:hover {
   background-color: rgb(27, 155, 27);
 }
-#create-branch .manage-branches #branches-table-body tr .edit-btn.delete-btn, #create-branch .manage-branches #branches-table-body tr .delete-btn.delete-btn {
+#create-branch .manage-branches #branches-table-body tr .edit-btn.delete-btn,
+#create-branch .manage-branches #branches-table-body tr .delete-btn.delete-btn {
   background-color: rgb(239, 37, 37);
   color: #FFFFFF;
 }
-#create-branch .manage-branches #branches-table-body tr .edit-btn.delete-btn:hover, #create-branch .manage-branches #branches-table-body tr .delete-btn.delete-btn:hover {
+#create-branch .manage-branches #branches-table-body tr .edit-btn.delete-btn:hover,
+#create-branch .manage-branches #branches-table-body tr .delete-btn.delete-btn:hover {
   background-color: rgb(129, 20, 20);
 }
 #create-branch .manage-branches .branches-list-table {
@@ -667,170 +767,78 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+#create-branch .modal.show {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 #create-branch .modal .modal-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #1D1D41;
+  padding: 30px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   position: relative;
+  transition: transform 0.3s ease-in-out;
+  transform: scale(0.95);
+}
+#create-branch .modal .modal-content.show {
+  transform: scale(1);
 }
 #create-branch .modal .modal-content .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  color: #FFFFFF;
   cursor: pointer;
-  color: #333;
+  transition: transform 0.2s;
 }
-
-.admin-inventory {
-  padding: 20px;
-  font-family: "General Sans", sans-serif;
-  background-color: #1D1D41;
-  color: #FFFFFF;
+#create-branch .modal .modal-content .close-btn:hover {
+  transform: rotate(90deg);
 }
-.admin-inventory .admin-header {
-  margin-bottom: 30px;
-}
-.admin-inventory .admin-header h1 {
-  font-size: 28px;
-  color: #FFFFFF;
-}
-.admin-inventory .admin-header p {
-  font-size: 16px;
-  color: white;
-}
-.admin-inventory .branch-filter {
-  display: flex;
-  align-items: center;
+#create-branch .modal .modal-content .form-group {
   margin-bottom: 20px;
 }
-.admin-inventory .branch-filter label {
+#create-branch .modal .modal-content .form-group label {
+  display: block;
   font-size: 16px;
-  margin-right: 10px;
   color: #FFFFFF;
+  margin-bottom: 5px;
 }
-.admin-inventory .branch-filter select {
-  padding: 8px;
+#create-branch .modal .modal-content .form-group input {
+  width: 100%;
+  padding: 12px;
+  background-color: #141332;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+  color: #FFFFFF;
   font-size: 14px;
-  border: 1px solid #4B4B99;
-  border-radius: 4px;
-  background-color: #1D1D41;
-  color: #FFFFFF;
-}
-.admin-inventory .branch-filter select:focus {
   outline: none;
+  transition: border-color 0.3s;
+}
+#create-branch .modal .modal-content .form-group input:focus {
   border-color: #6359E9;
 }
-.admin-inventory .admin-section {
-  margin-bottom: 30px;
-  background-color: #141332;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.admin-inventory .admin-section h2 {
-  font-size: 22px;
-  margin-bottom: 15px;
-  color: #FFFFFF;
-}
-.admin-inventory .admin-section .admin-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.admin-inventory .admin-section .admin-table thead {
+#create-branch .modal .modal-content .btn-submit {
   background-color: #6359E9;
   color: #FFFFFF;
-}
-.admin-inventory .admin-section .admin-table thead tr th {
-  padding: 10px;
-  text-align: left;
-  font-size: 16px;
-  border: 1px solid #4B4B99;
-}
-.admin-inventory .admin-section .admin-table tbody tr td {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #4B4B99;
-  color: #FFFFFF;
-}
-.admin-inventory .admin-section .admin-table tbody tr td .add-stock-input {
-  width: 100px;
-  padding: 5px;
-  font-size: 14px;
-  margin-right: 10px;
-  border-radius: 4px;
-  border: 1px solid #4B4B99;
-  background-color: #1D1D41;
-  color: #FFFFFF;
-}
-.admin-inventory .admin-section .admin-table tbody tr td .btn {
-  padding: 5px 10px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-}
-.admin-inventory .admin-section .admin-table tbody tr td .btn.btn-success {
-  background-color: #ff5c5c;
-  color: #FFFFFF;
-}
-.admin-inventory .admin-section .admin-table tbody tr td .btn.btn-success:hover {
-  background-color: #ff8f8f;
-}
-.admin-inventory .admin-section .admin-table tbody tr td .btn.btn-info {
-  background-color: #6359E9;
-  color: #FFFFFF;
-}
-.admin-inventory .admin-section .admin-table tbody tr td .btn.btn-info:hover {
-  background-color: rgb(56.6808510638, 43.9680851064, 227.0319148936);
-}
-.admin-inventory #review-request-modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-}
-.admin-inventory #review-request-modal .modal-content {
-  background-color: #141332;
-  padding: 20px;
-  margin: 10% auto;
-  width: 60%;
-  border-radius: 8px;
-  color: #FFFFFF;
-}
-.admin-inventory #review-request-modal .modal-content h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.admin-inventory #review-request-modal .modal-content #modal-items {
-  margin-bottom: 20px;
-}
-.admin-inventory #review-request-modal .modal-content .btn {
-  padding: 10px 20px;
+  border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  display: block;
+  width: 100%;
+  transition: background-color 0.3s;
 }
-.admin-inventory #review-request-modal .modal-content .btn.btn-primary {
-  background-color: #6359E9;
-  color: #FFFFFF;
-}
-.admin-inventory #review-request-modal .modal-content .btn.btn-primary:hover {
+#create-branch .modal .modal-content .btn-submit:hover {
   background-color: rgb(56.6808510638, 43.9680851064, 227.0319148936);
-}
-.admin-inventory #review-request-modal .modal-content .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 30px;
-  color: #FFFFFF;
-  cursor: pointer;
 }
 
 #sales-record-overview {
@@ -889,7 +897,7 @@ body {
   font-size: 14px;
 }
 #sales-record-overview .sales-filters select:hover {
-  background-color: rgb(12.6086956522, 11.9782608696, 31.5217391304);
+  background-color: #141332;
 }
 #sales-record-overview .sales-filters select:focus {
   outline: none;
@@ -905,7 +913,7 @@ body {
   transition: background-color 0.3s ease-in-out;
 }
 #sales-record-overview .sales-filters button:hover {
-  background-color: rgb(141.3191489362, 134.0319148936, 238.9680851064);
+  background-color: #6359E9;
 }
 #sales-record-overview .sales-record-content .sales-table {
   background-color: #141332;
@@ -941,7 +949,8 @@ body {
   width: 100%;
   border-collapse: collapse;
 }
-#sales-record-overview .sales-record-content .sales-table table th, #sales-record-overview .sales-record-content .sales-table table td {
+#sales-record-overview .sales-record-content .sales-table table th,
+#sales-record-overview .sales-record-content .sales-table table td {
   padding: 10px;
   border: 1px solid #4B4B99;
   text-align: left;
@@ -979,7 +988,7 @@ body {
   transform: scale(1.05);
 }
 #sales-record-overview .sales-record-content .pagination button:disabled {
-  background-color: #888;
+  background-color: #141332;
   opacity: 0.1;
   pointer-events: none;
   cursor: not-allowed;
@@ -1030,7 +1039,8 @@ body {
   color: #FFFFFF;
   margin-right: 5px;
 }
-#manage-distribution .distribution-filters input[type=date], #manage-distribution .distribution-filters select {
+#manage-distribution .distribution-filters input[type=date],
+#manage-distribution .distribution-filters select {
   padding: 8px 15px;
   border: 1px solid #FFFFFF;
   background-color: #141332;
@@ -1073,7 +1083,8 @@ body {
   width: 100%;
   border-collapse: collapse;
 }
-#manage-distribution .distribution-table table th, #manage-distribution .distribution-table table td {
+#manage-distribution .distribution-table table th,
+#manage-distribution .distribution-table table td {
   padding: 10px;
   border: 1px solid #4B4B99;
   text-align: left;
@@ -1089,6 +1100,230 @@ body {
 }
 #manage-distribution .distribution-table table tr:hover {
   background-color: #6359E9;
+}
+#manage-distribution .pagination {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+#manage-distribution .pagination button {
+  background-color: #6359E9;
+  color: #FFFFFF;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+#manage-distribution .pagination button:hover {
+  background-color: #6359E9;
+  transform: scale(1.05);
+}
+#manage-distribution .pagination button:disabled {
+  color: #1D1D41;
+  background-color: #1D1D41;
+  opacity: 0.1;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+#inventory-section {
+  border-radius: 10px;
+  background-color: #1D1D41;
+  padding: 20px;
+}
+#inventory-section h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #FFFFFF;
+}
+#inventory-section .branch-filter-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+#inventory-section .branch-filter-container label {
+  font-weight: bold;
+  color: #FFFFFF;
+}
+#inventory-section .branch-filter-container select {
+  background-color: #141332;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: 1px solid #141332;
+  border-radius: 5px;
+}
+#inventory-section .inventory-table-container {
+  margin-bottom: 30px;
+}
+#inventory-section .inventory-table-container .inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #141332;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+#inventory-section .inventory-table-container .inventory-table th,
+#inventory-section .inventory-table-container .inventory-table td {
+  padding: 10px 15px;
+  text-align: center;
+}
+#inventory-section .inventory-table-container .inventory-table th {
+  background-color: #6359E9;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+#inventory-section .inventory-table-container .inventory-table tbody tr:nth-child(even) {
+  background-color: #141332;
+}
+#inventory-section .inventory-table-container .inventory-table tbody tr:hover {
+  background-color: #141332;
+}
+#inventory-section .add-inventory-container h2 {
+  margin-bottom: 15px;
+  color: #FFFFFF;
+}
+#inventory-section .add-inventory-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#inventory-section .add-inventory-container form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#inventory-section .add-inventory-container form .form-group label {
+  font-weight: bold;
+  color: #FFFFFF;
+}
+#inventory-section .add-inventory-container form .form-group .checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#inventory-section .add-inventory-container form .form-group .checkbox-group label {
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+#inventory-section .add-inventory-container form .form-group .checkbox-group label input[type=checkbox] {
+  cursor: pointer;
+}
+#inventory-section .add-inventory-container form .form-group .checkbox-group input[type=number] {
+  background-color: #141332;
+  width: 80px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #1D1D41;
+  border-radius: 5px;
+  text-align: right;
+}
+#inventory-section .add-inventory-container form .form-group .checkbox-group input[type=number]:disabled {
+  background-color: #141332;
+  cursor: not-allowed;
+}
+#inventory-section .add-inventory-container form .btn-submit {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #6359E9;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#inventory-section .add-inventory-container form .btn-submit:hover {
+  background-color: #1D1D41;
+}
+
+#audit-trail-section {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #1D1D41;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+#audit-trail-section h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #FFFFFF;
+}
+#audit-trail-section .audit-trail-table-container {
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #141332;
+}
+#audit-trail-section .audit-trail-table-container .audit-trail-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#audit-trail-section .audit-trail-table-container .audit-trail-table th,
+#audit-trail-section .audit-trail-table-container .audit-trail-table td {
+  text-align: left;
+  padding: 10px;
+  font-size: 14px;
+}
+#audit-trail-section .audit-trail-table-container .audit-trail-table th {
+  background-color: #141332;
+  font-weight: bold;
+  color: #FFFFFF;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+#audit-trail-section .audit-trail-table-container .audit-trail-table td {
+  height: 55px;
+  color: #FFFFFF;
+}
+#audit-trail-section .audit-trail-table-container .audit-trail-table td:nth-child(1) {
+  text-align: center;
+}
+#audit-trail-section .audit-trail-table-container .audit-trail-table td:nth-child(5) {
+  font-size: 12px;
+  color: #FFFFFF;
+  word-break: break-word;
+}
+#audit-trail-section .audit-trail-table-container .audit-trail-table tbody tr:nth-child(odd) {
+  background-color: #141332;
+}
+#audit-trail-section .audit-trail-table-container .audit-trail-table tbody tr:hover {
+  background-color: #141332;
+}
+#audit-trail-section .pagination-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+#audit-trail-section .pagination-container button {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f4f4f4;
+  color: #555;
+  cursor: pointer;
+  font-size: 14px;
+}
+#audit-trail-section .pagination-container button:hover {
+  background-color: #ddd;
+}
+#audit-trail-section .pagination-container button:disabled {
+  background-color: #f4f4f4;
+  color: #aaa;
+  cursor: not-allowed;
+}
+#audit-trail-section .pagination-container span {
+  font-size: 14px;
+  color: #555;
 }
 
 /*# sourceMappingURL=style.css.map */

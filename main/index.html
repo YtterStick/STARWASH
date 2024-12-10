@@ -27,35 +27,40 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link" data-section="reports">
-                        <img src="/assets/chart.svg" alt="Reports">
+                        <i class="fas fa-bar-chart" style="margin-right: 5px;" aria-hidden="true"></i>
                         <span class="text-link">Reports</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="#" class="nav-link" onclick="toggleDropdown(event)">
-                        <img src="/assets/record.svg" alt="Branch Management">
+                        <i class="fas fa-store" style="margin-right: 5px;"></i>
                         <span class="text-link">Branch Management</span>
                         <i class="fa-solid fa-chevron-right arrow-icon"></i>
                     </a>
                     <ul class="submenu">
                         <li class="branch-item">
                             <a href="#" class="nav-link" data-section="create-branch">
+                                
+                        <i class="fas fa-pencil-alt" style="margin-right: 5px;"></i>
                                 Create Branch
                             </a>
                         </li>
                         <li class="branch-item">
                             <a href="#" class="nav-link" data-section="inventory">
+                        <i class="fas fa-box" style="margin-right: 5px;"></i>
                                 Inventory
                             </a>
                         </li>
                         <li class="branch-item">
                             <a href="#" class="nav-link" data-section="sales-record">
+                                <i class="fas fa-book" style="margin-right: 5px;"></i>
                                 Sales Record Overview
                             </a>
                         </li>
                         <li class="branch-item">
                             <a href="#" class="nav-link" data-section="distribution-overview">
+                                <i class="fa fa-archive" style="margin-right: 5px;"></i>
                                 Distribution Overview
                             </a>
                         </li>
@@ -65,13 +70,18 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link" onclick="toggleDropdown(event)">
-                        <img src="/assets/manage.svg" alt="">
+                        
+                        <i class="fas fa-user-cog" style="margin-right: 5px;"></i>
                         <span class="text-link">Account Management</span>
                         <i class="arrow-icon fas fa-chevron-right"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#account-management" class="nav-link" data-section="create-account">Create Account</a></li>
-                        <li><a href="#accounts-table" class="nav-link" data-section="existing-account">Existing Accounts</a></li>
+                        <li><a href="#account-management" class="nav-link" data-section="create-account">
+                            <i class="fa fa-user-plus" style="margin-right:5px;"></i>
+                            Create Account</a></li>
+                        <li><a href="#accounts-table" class="nav-link" data-section="existing-account">
+                            <i class="fa fa-user" style="margin-right: 5px;"></i>
+                            Existing Accounts</a></li>
                     </ul>
                 </li>
             
@@ -81,15 +91,9 @@
 
             <ul class="navbar-item">
                 <li class="nav-item">
-                    <a href="#" class="nav-link" data-section="security">
-                        <img src="/assets/security.svg" alt="Security">
+                    <a href="#" class="nav-link" data-section="audit-trail">
+                        <i class="fa fa-history" style="margin-right: 5px;"> </i>
                         <span class="text-link">Audit Log</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-section="log-history">
-                        <img src="/assets/help.svg" alt="Log History">
-                        <span class="text-link">Profile Settings</span>
                     </a>
                 </li>
             </ul>
@@ -102,12 +106,12 @@
                         <p>Admin</p>
                     </div>
                 </div>
+                <div class="logout" id="logout-btn">
+                    <img src="/assets/logout.svg" alt="Logout" class="img-log">
+                    <span class="btn-logout">Logout</span>
+                </div>    
             </div>
-
-            <div class="logout" id="logout-btn">
-                <img src="/assets/logout.svg" alt="Logout" class="img-log">
-                <span class="btn-logout">Logout</span>
-            </div>
+           
         </aside>
 
         <div class="main-content" id="main-content-id">

@@ -19,21 +19,27 @@
             <ul class="navbar-item">
                 <li class="nav-item">
                     <a href="#" class="nav-link active" data-section="dashboard">
-                        <img src="" alt="">
+                        <img src="/assets/dashboard.svg" alt="">
                         <span class="text-link">Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="#" class="nav-link" onclick="toggleDropdown(event)">
-                        <img src="" alt="">
+                        <i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>
                         <span class="text-link">Sales Order</span>
                         <i class="fa-solid fa-chevron-right arrow-icon"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#" class="nav-link" data-section="create-sales-order">Create Sales Order</a></li>
-                        <li><a href="#" class="nav-link" data-section="order-process">Process Payment</a></li>
-                        <li><a href="#" class="nav-link" data-section="load-status">Load Status</a></li>
+                        <li><a href="#" class="nav-link" data-section="create-sales-order">
+                            <i class="fa fa-cart-plus" style="margin-right: 5px;"></i>
+                            Create Sales Order</a></li>
+                        <li><a href="#" class="nav-link" data-section="order-process">
+                            <i class="fa fa-hourglass-1" style="margin-right: 5px;" aria-hidden="true"></i>
+                            Process Payment</a></li>
+                        <li><a href="#" class="nav-link" data-section="load-status">
+                            <i class="fas fa-check-double" style="margin-right: 5px;"></i>
+                            Load Status</a></li>
                     </ul>
                 </li>
                 <hr class="strip-line">
@@ -41,7 +47,9 @@
                 <li class="nav-item">
                     <a href="#" onclick="toggleDropdown(event)" class="nav-link">
                         <img src="" alt="">
-                        <span class="text-link">Sales Record</span>
+                        <span class="text-link">
+                            <i class="fas fa-book"></i>
+                            Sales Record</span>
                         <i class="arrow-icon fas fa-chevron-right"></i>
                     </a>
                     <ul class="submenu">

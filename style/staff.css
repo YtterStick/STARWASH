@@ -257,12 +257,13 @@ body {
   margin-top: 0px;
   background-color: #1D1D41;
 }
-.dashboard-records .sales-record-table th, .dashboard-records .sales-record-table td {
+.dashboard-records .sales-record-table th,
+.dashboard-records .sales-record-table td {
   padding: 10px;
   text-align: center;
   font-size: 14px;
   white-space: nowrap;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #4B4B99;
 }
 .dashboard-records .sales-record-table th {
   background-color: #4B4B99;
@@ -368,7 +369,8 @@ body {
   margin: 10px 0 5px;
   font-weight: bold;
 }
-.modal .modal-content input, .modal .modal-content select {
+.modal .modal-content input,
+.modal .modal-content select {
   background-color: #141332;
   width: 100%;
   padding: 8px;
@@ -377,15 +379,19 @@ body {
   border-radius: 4px;
   font-size: 14px;
 }
-.modal .modal-content input.focus, .modal .modal-content select.focus {
+.modal .modal-content input.focus,
+.modal .modal-content select.focus {
   outline: none;
   border-color: #6359E9;
 }
 .modal .modal-buttons {
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
-  gap: 10px; /* Space between buttons */
-  margin-top: 20px; /* Space between the form and the buttons */
+  justify-content: flex-end;
+  /* Align buttons to the right */
+  gap: 10px;
+  /* Space between buttons */
+  margin-top: 20px;
+  /* Space between the form and the buttons */
 }
 .modal button {
   padding: 10px 15px;
@@ -475,13 +481,14 @@ body {
   margin-bottom: 10px;
 }
 .unpaid-orders #unpaid-orders-table {
+  border: 1px solid #FFFFFF;
+  background-color: #141332;
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 .unpaid-orders th,
 .unpaid-orders td {
-  border: 1px solid #444;
   padding: 8px;
   text-align: center;
 }
@@ -673,86 +680,62 @@ body {
   background-color: rgb(56.6808510638, 43.9680851064, 227.0319148936);
 }
 
-.inventory-section {
+#staff-inventory-section {
   padding: 20px;
+  border-radius: 10px;
   background-color: #1D1D41;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  font-family: "General Sans", sans-serif;
 }
-
-.inventory-header {
+#staff-inventory-section h1 {
   text-align: center;
   margin-bottom: 20px;
   color: #FFFFFF;
 }
-.inventory-header h2 {
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.inventory-grid {
+#staff-inventory-section .branch-filter-container {
+  margin-bottom: 20px;
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
 }
-
-.inventory-item {
-  background-color: #141332;
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 8px;
-  width: 30%;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  transition: 0.3s ease-in-out;
-}
-.inventory-item:hover {
-  background-color: #6359E9;
-  color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-.inventory-item h3 {
-  margin: 0;
-  font-size: 18px;
+#staff-inventory-section .branch-filter-container label {
+  font-weight: bold;
   color: #FFFFFF;
 }
-.inventory-item p {
-  font-size: 16px;
-  color: white;
-}
-
-.request-btn {
-  background-color: #6359E9;
-  color: #FFFFFF;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+#staff-inventory-section .branch-filter-container select {
+  padding: 5px 10px;
   font-size: 14px;
-  margin-top: 10px;
-  transition: 0.3s ease-in-out;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #FFFFFF;
+  cursor: not-allowed;
 }
-.request-btn:hover {
-  background-color: rgb(56.6808510638, 43.9680851064, 227.0319148936);
+#staff-inventory-section .inventory-table-container {
+  margin-top: 30px;
 }
-
-.inventory-summary {
+#staff-inventory-section .inventory-table-container .inventory-table {
+  width: 100%;
+  border-collapse: collapse;
   background-color: #141332;
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-.inventory-summary h3 {
-  margin-bottom: 10px;
-  font-size: 18px;
+#staff-inventory-section .inventory-table-container .inventory-table th,
+#staff-inventory-section .inventory-table-container .inventory-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+#staff-inventory-section .inventory-table-container .inventory-table th {
+  background-color: #141332;
+  font-weight: bold;
   color: #FFFFFF;
 }
-.inventory-summary p {
-  font-size: 16px;
-  color: #FFFFFF;
+#staff-inventory-section .inventory-table-container .inventory-table tbody tr:nth-child(even) {
+  background-color: #141332;
+}
+#staff-inventory-section .inventory-table-container .inventory-table tbody tr:hover {
+  background-color: #141332;
+}
+#staff-inventory-section .inventory-table-container .inventory-table tbody td {
+  font-size: 14px;
 }
 
 .manage-distribution {
@@ -779,15 +762,17 @@ body {
   font-size: 14px;
   margin-right: 10px;
 }
-.manage-distribution .filters input, .manage-distribution .filters select {
+.manage-distribution .filters input,
+.manage-distribution .filters select {
   padding: 10px;
   font-size: 14px;
   border-radius: 5px;
-  border: 1px solid #444;
+  border: 1px solid #141332;
   background-color: #141332;
   color: #FFFFFF;
 }
-.manage-distribution .filters input:focus, .manage-distribution .filters select:focus {
+.manage-distribution .filters input:focus,
+.manage-distribution .filters select:focus {
   outline: none;
   border-color: #6359E9;
 }
@@ -815,14 +800,15 @@ body {
   /* Date Paid */
   /* Action */
 }
-.manage-distribution .sales-record-table th, .manage-distribution .sales-record-table td {
+.manage-distribution .sales-record-table th,
+.manage-distribution .sales-record-table td {
   padding: 10px;
   text-align: center;
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #4B4B99;
 }
 .manage-distribution .sales-record-table th {
   background-color: #4B4B99;
@@ -832,20 +818,43 @@ body {
   background-color: #1D1D41;
   font-size: 14px;
 }
-.manage-distribution .sales-record-table th:nth-child(1), .manage-distribution .sales-record-table td:nth-child(1) {
+.manage-distribution .sales-record-table th:nth-child(1),
+.manage-distribution .sales-record-table td:nth-child(1) {
   width: 20%;
 }
-.manage-distribution .sales-record-table th:nth-child(2), .manage-distribution .sales-record-table td:nth-child(2) {
+.manage-distribution .sales-record-table th:nth-child(2),
+.manage-distribution .sales-record-table td:nth-child(2) {
   width: 15%;
 }
-.manage-distribution .sales-record-table th:nth-child(3), .manage-distribution .sales-record-table td:nth-child(3) {
+.manage-distribution .sales-record-table th:nth-child(3),
+.manage-distribution .sales-record-table td:nth-child(3) {
   width: 15%;
 }
-.manage-distribution .sales-record-table th:nth-child(4), .manage-distribution .sales-record-table td:nth-child(4) {
+.manage-distribution .sales-record-table th:nth-child(4),
+.manage-distribution .sales-record-table td:nth-child(4) {
   width: 15%;
 }
-.manage-distribution .sales-record-table th:nth-child(5), .manage-distribution .sales-record-table td:nth-child(5) {
+.manage-distribution .sales-record-table th:nth-child(5),
+.manage-distribution .sales-record-table td:nth-child(5) {
   width: 15%;
+}
+.manage-distribution .sales-record-table button {
+  background-color: #1D1D41;
+  border: 1px solid #4B4B99;
+  color: #FFFFFF;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.manage-distribution .sales-record-table button:hover {
+  background-color: #6359E9;
+  border-color: #6359E9;
+}
+.manage-distribution .sales-record-table button.active {
+  background-color: #6359E9;
+  font-weight: bold;
 }
 .manage-distribution .sales-record-table tr:hover {
   background-color: #6359E9;
@@ -900,7 +909,8 @@ body {
   font-size: 14px;
   margin-right: 10px;
 }
-.view-sales-record-container .filters input, .view-sales-record-container .filters select {
+.view-sales-record-container .filters input,
+.view-sales-record-container .filters select {
   padding: 10px;
   font-size: 14px;
   border-radius: 5px;
@@ -909,7 +919,8 @@ body {
   color: #FFFFFF;
   border: #FFFFFF;
 }
-.view-sales-record-container .filters input:focus, .view-sales-record-container .filters select:focus {
+.view-sales-record-container .filters input:focus,
+.view-sales-record-container .filters select:focus {
   outline: none;
   border-color: #6359E9;
 }
@@ -941,20 +952,27 @@ body {
   /* Claimed Status */
   /* Date & Time */
 }
-.view-sales-record-container .sales-record-table th, .view-sales-record-container .sales-record-table td {
+.view-sales-record-container .sales-record-table th,
+.view-sales-record-container .sales-record-table td {
   padding: 10px;
   text-align: left;
-  word-wrap: break-word; /* Allow text to wrap within cells */
+  word-wrap: break-word;
+  /* Allow text to wrap within cells */
   overflow: hidden;
-  text-overflow: ellipsis; /* Ensures that content is truncated if it's too long */
-  max-width: 150px; /* Set a maximum width for cells */
-  white-space: nowrap; /* Prevent the text from breaking onto multiple lines */
-  height: 40px; /* Fix row height */
+  text-overflow: ellipsis;
+  /* Ensures that content is truncated if it's too long */
+  max-width: 150px;
+  /* Set a maximum width for cells */
+  white-space: nowrap;
+  /* Prevent the text from breaking onto multiple lines */
+  height: 40px;
+  /* Fix row height */
 }
 .view-sales-record-container .sales-record-table th {
   background-color: #4B4B99;
   font-size: 14px;
-  width: 20%; /* Set fixed width for header */
+  width: 20%;
+  /* Set fixed width for header */
   position: relative;
 }
 .view-sales-record-container .sales-record-table td {
@@ -963,31 +981,40 @@ body {
   border-bottom: 1px solid #4B4B99;
   text-align: center;
 }
-.view-sales-record-container .sales-record-table td:nth-child(1), .view-sales-record-container .sales-record-table th:nth-child(1) {
+.view-sales-record-container .sales-record-table td:nth-child(1),
+.view-sales-record-container .sales-record-table th:nth-child(1) {
   width: 15%;
 }
-.view-sales-record-container .sales-record-table td:nth-child(2), .view-sales-record-container .sales-record-table th:nth-child(2) {
+.view-sales-record-container .sales-record-table td:nth-child(2),
+.view-sales-record-container .sales-record-table th:nth-child(2) {
   width: 10%;
 }
-.view-sales-record-container .sales-record-table td:nth-child(3), .view-sales-record-container .sales-record-table th:nth-child(3) {
+.view-sales-record-container .sales-record-table td:nth-child(3),
+.view-sales-record-container .sales-record-table th:nth-child(3) {
   width: 10%;
 }
-.view-sales-record-container .sales-record-table td:nth-child(4), .view-sales-record-container .sales-record-table th:nth-child(4) {
+.view-sales-record-container .sales-record-table td:nth-child(4),
+.view-sales-record-container .sales-record-table th:nth-child(4) {
   width: 10%;
 }
-.view-sales-record-container .sales-record-table td:nth-child(5), .view-sales-record-container .sales-record-table th:nth-child(5) {
+.view-sales-record-container .sales-record-table td:nth-child(5),
+.view-sales-record-container .sales-record-table th:nth-child(5) {
   width: 10%;
 }
-.view-sales-record-container .sales-record-table td:nth-child(6), .view-sales-record-container .sales-record-table th:nth-child(6) {
+.view-sales-record-container .sales-record-table td:nth-child(6),
+.view-sales-record-container .sales-record-table th:nth-child(6) {
   width: 10%;
 }
-.view-sales-record-container .sales-record-table td:nth-child(7), .view-sales-record-container .sales-record-table th:nth-child(7) {
+.view-sales-record-container .sales-record-table td:nth-child(7),
+.view-sales-record-container .sales-record-table th:nth-child(7) {
   width: 10%;
 }
-.view-sales-record-container .sales-record-table td:nth-child(8), .view-sales-record-container .sales-record-table th:nth-child(8) {
+.view-sales-record-container .sales-record-table td:nth-child(8),
+.view-sales-record-container .sales-record-table th:nth-child(8) {
   width: 10%;
 }
-.view-sales-record-container .sales-record-table td:nth-child(9), .view-sales-record-container .sales-record-table th:nth-child(9) {
+.view-sales-record-container .sales-record-table td:nth-child(9),
+.view-sales-record-container .sales-record-table th:nth-child(9) {
   width: 15%;
 }
 .view-sales-record-container .sales-record-table tr:hover {
@@ -995,18 +1022,22 @@ body {
   color: #FFFFFF;
 }
 .view-sales-record-container .sales-record-table .paid {
-  color: #64ff64; /* Green for paid */
+  color: #64ff64;
+  /* Green for paid */
   font-weight: bold;
 }
 .view-sales-record-container .sales-record-table .unpaid {
-  color: #ff5c5c; /* Red for unpaid */
+  color: #ff5c5c;
+  /* Red for unpaid */
   font-weight: bold;
 }
 .view-sales-record-container .sales-record-table .claimed {
-  color: #00c4cc; /* Blue for claimed */
+  color: #00c4cc;
+  /* Blue for claimed */
 }
 .view-sales-record-container .sales-record-table .unclaimed {
-  color: #4B4B99; /* Gray for unclaimed */
+  color: #4B4B99;
+  /* Gray for unclaimed */
 }
 .view-sales-record-container .pagination {
   display: flex;
@@ -1051,22 +1082,25 @@ body {
   width: 100%;
   border-collapse: collapse;
   background-color: #141332;
+  padding: 10px;
+  border: 1px solid #FFFFFF;
 }
-.load-status-container .load-status-table th, .load-status-container .load-status-table td {
+.load-status-container .load-status-table th,
+.load-status-container .load-status-table td {
+  background-color: #141332;
   padding: 10px;
   text-align: center;
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: 1px solid #444;
 }
 .load-status-container .load-status-table th {
-  background-color: #4B4B99;
+  background-color: #141332;
   font-size: 14px;
 }
 .load-status-container .load-status-table td {
-  background-color: #1D1D41;
+  background-color: #141332;
   font-size: 14px;
 }
 .load-status-container .load-status-table tr:hover {
@@ -1086,11 +1120,35 @@ body {
   color: #FFFFFF;
 }
 .load-status-container .load-status-table .status-btn.ongoing {
-  background-color: #64ff64;
+  background-color: rgb(48, 140, 48);
   color: #FFFFFF;
 }
 .load-status-container .load-status-table .status-btn:hover {
   opacity: 0.9;
+}
+.load-status-container .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.load-status-container .pagination button {
+  background-color: #1e2a38;
+  border: 1px solid #4B4B99;
+  color: #FFFFFF;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.load-status-container .pagination button:hover {
+  background-color: #6359E9;
+  border-color: #6359E9;
+}
+.load-status-container .pagination button.active {
+  background-color: #6359E9;
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=staff.css.map */

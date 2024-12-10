@@ -83,9 +83,11 @@ app.get('/api/sales-order/unpaid', (req, res) => {
 
 
 const cors = require('cors');
-app.use(cors()); // Allow all origins, or you can specify origins
+app.use(cors({
+})); // Allow all origins, or you can specify origins
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'main', 'login.html'));
+    
 });
 app.get("/debug-session", (req, res) => {
     res.json(req.session); // Returns the current session data
