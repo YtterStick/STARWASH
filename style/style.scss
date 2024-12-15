@@ -35,8 +35,8 @@
         .sidebar {
             width: $sidebar-width;
             height: 100vh;
-            background-color: $bg-color-secondary; // Your existing sidebar color
-            color: #ecf0f1; // Your existing text color
+            background-color: $bg-color-secondary;
+            color: #ecf0f1; 
             position: fixed;
             top: 0;
             left: 0;
@@ -517,15 +517,15 @@
                     .close-btn {
                         
                         position: absolute;
-                        top: 10px; // Adjusted to be closer to the modal content
-                        right: 10px; // Position it slightly inward from the modal edge
+                        top: 10px;
+                        right: 10px;
                         font-size: 24px;
                         color: $white-color;
                         cursor: pointer;
                         transition: transform 0.2s;
             
                         &:hover {
-                            transform: rotate(90deg); // Rotate for hover effect
+                            transform: rotate(90deg);
                         }
                     }
                     .form-group {
@@ -548,7 +548,7 @@
                             color: $white-color;
                             font-size: 14px;
                             outline: none;
-                            appearance: none; // Hides native dropdown styles
+                            appearance: none; 
                             position: relative;
                             transition: border-color 0.3s;
             
@@ -562,7 +562,7 @@
                             background-repeat: no-repeat;
                             background-position: right 10px center;
                             background-size: 1em;
-                            padding-right: 30px; // Adds space for the icon
+                            padding-right: 30px; 
                             cursor: pointer;
                         }
                     }
@@ -587,7 +587,6 @@
             
         }
 
-        // report section
         .report-section {
             overflow: hidden;
             padding: 10px;
@@ -841,7 +840,7 @@
 
                 #branches-table-body {
                     tr {
-                        background-color: $bg-color; // Base background color for rows
+                        background-color: $bg-color;
                         color: $white-color;
                         border-bottom: 1px solid $bg-color-secondary;
 
@@ -851,7 +850,7 @@
                             text-align: center;
 
                             &:first-child {
-                                font-weight: bold; // Highlight branch name
+                                font-weight: bold;
                             }
 
                             &:last-child {
@@ -860,8 +859,6 @@
                                 gap: 10px;
                             }
                         }
-
-                        // Style buttons
                         .edit-btn,
                         .delete-btn {
                             padding: 5px 10px;
@@ -893,7 +890,6 @@
                     }
                 }
 
-                // Styling for the table itself
                 .branches-list-table {
                     width: 100%;
                     border-collapse: collapse;
@@ -1506,7 +1502,7 @@
             }
 
             .audit-trail-table-container {
-                overflow-x: auto; // Make it scrollable on small screens
+                overflow-x: auto;
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 background-color: $bg-color;
@@ -1527,9 +1523,9 @@
                         font-weight: bold;
                         color: $white-color;
 
-                        position: sticky; // Keep the header visible when scrolling
-                        top: 0; // Sticky header, position it at the top
-                        z-index: 1; // Make sure it stays on top of the table rows
+                        position: sticky;
+                        top: 0;
+                        z-index: 1;
                     }
 
                     td {
@@ -1537,14 +1533,14 @@
                         color: $white-color;
 
                         &:nth-child(1) {
-                            text-align: center; // Center align the ID column
+                            text-align: center;
                         }
 
                         &:nth-child(5) {
                             font-size: 12px;
-                            color: $white-color; // Details column in lighter color
+                            color: $white-color;
                             word-break: break-word;
-                            // Ensure long JSON strings don't break layout
+
                         }
                     }
 

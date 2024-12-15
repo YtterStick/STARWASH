@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const isAuthenticated = require("../middleware/auth");
 
-// Route to get all accounts (accessible to admins only)
+//get all account
 router.get("/", isAuthenticated("Admin"), (req, res) => {
     const db = req.app.get("db");
     const userRole = req.session.user.role;
@@ -64,7 +64,7 @@ router.get("/", isAuthenticated("Admin"), (req, res) => {
     });
 });
 
-// Route to get a single account by ID (accessible to admins)
+//delete branch
 router.get("/:id", isAuthenticated("Admin"), (req, res) => {
     const db = req.app.get("db");
     const userId = req.params.id;
@@ -104,7 +104,7 @@ router.get("/:id", isAuthenticated("Admin"), (req, res) => {
     });
 });
 
-// Route to update an existing account (accessible to admins)
+//delete account
 router.put("/:id", isAuthenticated("Admin"), (req, res) => {
     const db = req.app.get("db");
     const { username, role, branch_id } = req.body;
@@ -114,7 +114,6 @@ router.put("/:id", isAuthenticated("Admin"), (req, res) => {
         return res.status(400).json({ error: "Username and role are required fields." });
     }
 
-    // Set branch_id to null if the role is Admin
     const updatedBranchId = role === "Admin" ? null : branch_id;
 
     const query = `
@@ -138,7 +137,7 @@ router.put("/:id", isAuthenticated("Admin"), (req, res) => {
     });
 });
 
-// Route to delete an account (accessible to admins)
+//delete account
 router.delete("/:id", isAuthenticated("Admin"), (req, res) => {
     const db = req.app.get("db");
     const userId = req.params.id;

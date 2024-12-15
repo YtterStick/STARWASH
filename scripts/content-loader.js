@@ -32,6 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const logoutBtn = document.getElementById("logout-btn");
     const role = sessionStorage.getItem("role");
     const userId = sessionStorage.getItem("userId");
+  
+
+    
     if (!userId || !role) {
         alert("Session expired. Please log in again.");
         window.location.href = "/";
@@ -174,37 +177,33 @@ document.addEventListener("DOMContentLoaded", () => {
         let currentPage = 1;
         let currentBranchId = null;
 
-        // Map sort option values to backend column names
         const sortOptionMapping = {
             "date-created": "created_at",
             "date-paid": "paid_at",
         };
 
-        // Fetch and populate branch filter options
         function populateBranchOptions() {
             fetch('/api/branches')
                 .then(response => response.json())
                 .then(data => {
-                    branchFilter.innerHTML = ""; // Clear existing options
+                    branchFilter.innerHTML = "";
                     data.forEach((branch, index) => {
                         branchFilter.innerHTML += `<option value="${branch.id}">${branch.name}</option>`;
-                        // Set the first branch as default
                         if (index === 0) {
                             currentBranchId = branch.id;
                         }
                     });
-                    branchFilter.value = currentBranchId; // Set the default branch in the dropdown
-                    fetchDistributionRecords(); // Automatically fetch records for the default branch
+                    branchFilter.value = currentBranchId;
+                    fetchDistributionRecords();
                 })
                 .catch(err => console.error('Error fetching branches:', err));
         }
 
-        // Fetch unclaimed loads directly using branch information
         function fetchDistributionRecords() {
             const startDate = startDateInput.value;
             const endDate = endDateInput.value;
             const selectedBranchId = branchFilter.value || currentBranchId;
-            const sortOption = sortOptionMapping[sortOptionSelect.value] || "created_at"; // Map to backend column
+            const sortOption = sortOptionMapping[sortOptionSelect.value] || "created_at";
 
             if (!selectedBranchId) {
                 distributionOrdersTable.innerHTML = "<tr><td colspan='3'>Please select a branch.</td></tr>";
@@ -232,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             distributionOrdersTable.appendChild(row);
                         });
 
-                        // Update pagination
                         currentPageSpan.textContent = currentPage;
                         prevPage.disabled = currentPage === 1;
                         nextPage.disabled = currentPage >= data.totalPages;
@@ -243,10 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 .catch(err => console.error('Error fetching records:', err));
         }
 
-        // Event listeners for filters
         branchFilter.addEventListener("change", () => {
-            currentBranchId = branchFilter.value; // Update current branch ID
-            currentPage = 1; // Reset to the first page
+            currentBranchId = branchFilter.value;
+            currentPage = 1;
             fetchDistributionRecords();
         });
 
@@ -266,7 +263,6 @@ document.addEventListener("DOMContentLoaded", () => {
             fetchDistributionRecords();
         });
 
-        // Initial setup
         populateBranchOptions();
     }
 
@@ -276,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadAuditTrail(page = 1) {
         const auditTrailTableBody = document.getElementById("audit-trail-table-body");
         const paginationContainer = document.getElementById("pagination-container");
-        const recordsPerPage = 10; // Adjust as needed
+        const recordsPerPage = 10;
 
         fetch(`/api/branches/audit-trails?page=${page}&limit=${recordsPerPage}`)
             .then((response) => response.json())
@@ -285,11 +281,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     const auditTrails = data.auditTrails;
                     const totalPages = data.totalPages;
 
-                    // Clear previous content
                     auditTrailTableBody.innerHTML = "";
                     paginationContainer.innerHTML = "";
 
-                    // Populate the table with audit trails
                     auditTrails.forEach((trail, index) => {
                         const row = document.createElement("tr");
                         row.innerHTML = `
@@ -304,7 +298,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         auditTrailTableBody.appendChild(row);
                     });
 
-                    // Create pagination controls
                     if (page > 1) {
                         const prevButton = document.createElement("button");
                         prevButton.textContent = "Previous";
@@ -338,7 +331,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const inventoryTableBody = document.getElementById("inventory-table-body");
         const addInventoryForm = document.getElementById("add-inventory-form");
 
-        // Fetch branches and populate the branch filter dropdown
         fetch("/api/branches")
             .then(response => {
                 if (!response.ok) {
@@ -347,15 +339,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                console.log("Data:", data); // Logs data fetched from the API
-
-                // Check if data is an array and contains branches
+                console.log("Data:", data);
                 if (Array.isArray(data) && data.length > 0) {
                     branchFilter.innerHTML = data.map(branch =>
                         `<option value="${branch.id}">${branch.name}</option>`
-                    ).join(""); // Dynamically create <option> elements and join them
-
-                    // Load inventory for the first branch
+                    ).join(""); 
                     loadInventoryData(branchFilter.value);
                 } else {
                     console.error("No branches data available.");
@@ -365,7 +353,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Error fetching branches:", error);
             });
 
-        // Load inventory data for the selected branch
         branchFilter.addEventListener("change", () => {
             loadInventoryData(branchFilter.value);
         });
@@ -389,18 +376,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 .catch(error => console.error("Error loading inventory data:", error));
         }
 
-        // Handle enabling/disabling quantity inputs based on checkboxes
         addInventoryForm.addEventListener("input", event => {
             if (event.target.type === "checkbox") {
                 const quantityInput = event.target.closest(".checkbox-group").querySelector("input[type='number']");
                 quantityInput.disabled = !event.target.checked;
                 if (!event.target.checked) {
-                    quantityInput.value = ""; // Clear the input when disabled
+                    quantityInput.value = ""; 
                 }
             }
         });
 
-        // Handle form submission
         addInventoryForm.addEventListener("submit", event => {
             event.preventDefault();
             const branchId = branchFilter.value;
@@ -414,7 +399,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            // Send inventory data to backend for processing
             fetch(`/api/inventory`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -424,7 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(data => {
                     if (data.success) {
                         alert("Inventory updated successfully!");
-                        loadInventoryData(branchId); // Refresh inventory data
+                        loadInventoryData(branchId);
                         addInventoryForm.reset();
                     } else {
                         alert("Failed to update inventory.");
@@ -501,7 +485,7 @@ document.addEventListener("DOMContentLoaded", () => {
             modal.classList.remove("show");
             setTimeout(() => {
                 modal.style.display = "none";
-            }, 300); // Matches the animation duration
+            }, 300); 
         });
 
         window.addEventListener("click", (event) => {
@@ -528,7 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
                 if (data.success) {
                     alert("Branch deleted successfully!");
-                    populateAllBranches(); // Refresh the branch list
+                    populateAllBranches();
                 } else {
                     alert("Failed to delete the branch. Please try again.");
                 }
@@ -562,7 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (data.success) {
                         alert("Branch updated successfully!");
                         document.getElementById("editBranchModal").style.display = "none";
-                        populateAllBranches(); // Refresh the table
+                        populateAllBranches();
                     } else {
                         alert("Failed to update the branch. Please try again.");
                     }
@@ -600,17 +584,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     startDateInput.value = `${currentYear}-01-01`;
                     endDateInput.value = `${currentYear}-12-31`;
                     loadChartData();
-                    fetchTotals(); // Fetch totals when the page loads
+                    fetchTotals();
                 }
 
                 branchFilter.addEventListener("change", () => {
                     loadChartData();
                     fetchTotals();
-                }); // Update on branch change
+                });
                 startDateInput.addEventListener("change", () => {
                     loadChartData();
                     fetchTotals();
-                }); // Update on start date change
+                });
                 endDateInput.addEventListener("change", () => {
                     loadChartData();
                     fetchTotals();
